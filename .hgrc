@@ -1,0 +1,13 @@
+[extensions]
+hgk = 
+hgext.extdiff =
+
+[ui]
+username = phillip <philliplemons512@gmail.com>
+merge = meld
+
+[extdiff]
+cmd.meld = meld
+
+[merge-tools]
+meld.args = $local $base $other $output
