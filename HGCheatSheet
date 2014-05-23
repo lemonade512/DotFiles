@@ -1,0 +1,13 @@
+Undoing commited Changes
+=================================
+
+Method 1:
+
+    hg backout <revision number>
+
+Method 2:
+
+    hg commit --close-branch -m "Branch Closed"
+    hg up -r <specified revision>
+    <change some files>
+    hg ci
