@@ -49,12 +49,19 @@ filetype plugin indent on    " required
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/syntastic'
 Bundle 'kevinw/pyflakes-vim'
+Bundle 'Raimondi/delimitMate'
 
 syntax enable
 set background=dark
 set t_Co=256
 colorscheme solarized
 let g:solarized_termcolors=256
+
+" Allow easy window shifting
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
 
 set shiftwidth=4
 set tabstop=4
