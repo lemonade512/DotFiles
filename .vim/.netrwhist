@@ -1,7 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/home/phillip/Documents/PythonProjects/DMProgram/.git'
-let g:netrw_dirhist_2='/home/phillip/.solarized'
-let g:netrw_dirhist_3='/home/phillip/Documents/PythonProjects/DMProgram/.git'
-let g:netrw_dirhist_4='/home/phillip/.gconf'
-let g:netrw_dirhist_5='/home/phillip/.vim'
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/phillip/Documents/EssentialAlgorithms/StacksAndQueues'
+let g:netrw_dirhist_2='/home/phillip/Documents/EssentialAlgorithms/StacksAndQueues/Python'
+let g:netrw_dirhist_3='/home/phillip/Documents/EssentialAlgorithms'
+let g:netrw_dirhist_4='/home/phillip/Documents/EssentialAlgorithms/StacksAndQueues'
+let g:netrw_dirhist_5='/home/phillip/Documents/EssentialAlgorithms/StacksAndQueues/Python'
+let g:netrw_dirhist_6='/home/phillip/.vim/undo'
