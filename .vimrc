@@ -108,6 +108,9 @@ set undodir=~/.vim/undo//		" uses undo directory in .vim for all undo files
 
 " toggle between number and relativenumber and no number
 function! ToggleNumber()
+	if !exists("g:number_status")
+		let g:number_status = 2
+	endif
 
 	if (g:number_status == 1)
 		set norelativenumber
