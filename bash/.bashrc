@@ -89,7 +89,6 @@ PS1="\n${HC}[ ${RS}${FRED}\u@\h ${RS}${HC}] ${HC}${FGRN}\w${RS}\n${HC}${FRED}\$$
 #PS1='\n\[\033[01m\][ \[\033[00;34m\]\u@\h \[\033[00m\]\[\033[01m\]] \[\033[01;32m\]\w\[\033[00m\]\n\[\033[01;34m\]$\[\033[00m\]'
 
 alias solarize='~/.solarized/solarize.sh'
-alias vim='gvim'
 
 # correct minor errors in 'cd' commands
 shopt -s cdspell

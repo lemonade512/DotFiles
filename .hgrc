@@ -5,6 +5,7 @@ hgext.extdiff =
 [ui]
 username = phillip <philliplemons512@gmail.com>
 merge = meld
+editor = vim
 
 [extdiff]
 cmd.meld = meld
