@@ -123,8 +123,8 @@ set foldnestmax=10		" 10 nested fold max
 " }}}
 
 " Backups {{{
-set directory=~/.vim/swap//		" uses swap directory in .vim for all swp files
-set undodir=~/.vim/undo//		" uses undo directory in .vim for all undo files
+"set directory=~/.vim/swap//		" uses swap directory in .vim for all swp files
+"set undodir=~/.vim/undo//		" uses undo directory in .vim for all undo files
 " }}}
 
 " Autogroups {{{
