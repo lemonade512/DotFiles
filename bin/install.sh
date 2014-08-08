@@ -21,7 +21,7 @@ for dotfile in $(./bin/file_list.sh); do
 
 	[ -e $dotfiles_path ] || continue
 
-	if [ ! -L $path ]; then
+	if [ ! -e $path ]; then
 		link_notice $dotfile "absent"
 		ln -nfs $dotfiles_path $path
 	else
