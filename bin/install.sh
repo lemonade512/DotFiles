@@ -5,7 +5,15 @@ source $(dirname $0)/dot_functions.sh
 
 backup_dir="$HOME/backup"
 
+# Make sure we are in the proper directory
 directory_warning
+
+backup=true
+if [ $# -ne 0 ]; then
+	if [[ "$1" == "--no-backup" ]]; then
+		backup=false
+	fi
+fi
 
 for dotfile in $(./bin/file_list.sh); do
 	dotfiles_path="$PWD/$dotfile"
@@ -17,19 +25,25 @@ for dotfile in $(./bin/file_list.sh); do
 		link_notice $dotfile "absent"
 		ln -nfs $dotfiles_path $path
 	else
-		backup_notice $dotfile "$backup_dir"
-		if [ ! -e $backup_dir ]; then
-			mkdir -p $backup_dir
+		if [ $backup = true ]; then
+			backup_notice $dotfile "$backup_dir"
+			if [ ! -e $backup_dir ]; then
+				mkdir -p $backup_dir
+			fi
+			mv $path $backup_dir
+			link_notice $dotfile "backed up"
+			ln -nfs $dotfiles_path $path
+		else
+			skip_notice $dotfile "exists"
 		fi
-		mv $path $backup_dir
-		link_notice $dotfile "backed up"
-		ln -nfs $dotfiles_path $path
 	fi
 done
 
 for file in $(find custom -type f -not -name '*README*'); do
+	# in file substitute "custom" with the value of $HOME (like vim s/from/to/g)
 	path=${file/"custom"/$HOME}
 	name=$(basename $file)
+
 	if [ ! -L $path ]; then
 		dest=$(dirname $path)
 		link_notice $name "absent"
