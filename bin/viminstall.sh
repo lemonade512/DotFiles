@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install vim from source
-# =================================== 
+# ===================================
 sudo apt-get install libcurses5-dev libgnome2-dev libgnomeui-dev \
 					 libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
 					 libcairo2-dev libx11-dev libxpm-dev libxt-dev \
@@ -55,3 +55,7 @@ cd ~
 # ===================================
 sudo apt-get install pylint
 sudo apt-get install pyflakes
+
+# Tagbar dependencies
+# ===================================
+sudo apt-get install c-tags
