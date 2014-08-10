@@ -105,7 +105,9 @@ PS1="\n${HC}[ ${RS}${FRED}\u@\h ${RS}${HC}] ${HC}${FGRN}\w${RS}\n${HC}${FRED}\$$
 
 # }}}
 
-. "$HOME/z.sh"
+if [ -e "$HOME/DotFiles/z/z.sh" ]; then
+	. "$HOME/DotFiles/z/z.sh"
+fi
 
 # LESS man page colors {{{
 
