@@ -15,6 +15,14 @@ alias ll="ls -l"
 # Shortcuts {{{
 alias vbrc="vim ~/.bashrc && source ~/.bashrc"
 alias pylint="pylint --rcfile ~/.pylintrc"
+alias back="cd $OLDPWD"
+alias h="history | grep"
+alias reload="source ~/.bashrc"
+# }}}
+
+# Package Management {{{
+alias install="sudo apt-get install"
+alias remove="sudo apt-get remove"
 # }}}
 
 # Add an "alert" alias for long running commands.  Use like so:

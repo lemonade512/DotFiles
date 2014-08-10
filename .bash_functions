@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # vim: foldmethod=marker:foldlevel=0
 
 # Miscellaneous {{{
@@ -6,10 +6,32 @@ function echoerr() {
 	echo "$@" 1>&2
 }
 
+function error_return() {
+    echo "$1" 1>&2
+    return 1
+}
+
 function colors() {
     for code in {0..255}; do
         echo -e "\e[38;05;${code}m $code: Test";
     done
+}
+
+function welcome_msg() {
+    clear
+    tput setaf 1 # Set terminal to output red
+    if hash figlet 2>/dev/null; then
+        figlet "Welcome, " $USER
+    else
+        echo "Welcome, " $USER
+    fi
+    tput sgr0 # Set terminal to normal
+    COLUMNS=$(tput cols)
+    echo -e ""
+    echo -ne "Today is "; date
+    echo -e ""; cal ;
+    echo -ne "Up time:";uptime | awk /'up/'
+    echo ""
 }
 # }}}
 
@@ -71,7 +93,7 @@ function up() {
     else
         dir=${PWD%/$1/*}/$1
     fi
-    cd "$dir"
+    cd "$dir" 2&> /dev/null || error_return "No such parent directory: $1"
 }
 
 function upstr() {
@@ -83,3 +105,14 @@ function upstr() {
     echo "$dir"
 }
 # }}}
+
+# do sudo, or sudo last command if no argument given
+function s() {
+    if [[ $# == 0 ]]; then
+        sudo $(history -p '!!')
+    else
+        sudo "$@"
+    fi
+}
+
+function mktgz() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
