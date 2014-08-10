@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname $0)/dot_functions.sh
+
+directory_warning
+dirty_warning
+
+git pull --rebase
+./bin/uninstall.sh
+./bin/install.sh
