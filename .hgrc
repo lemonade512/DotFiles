@@ -1,11 +1,16 @@
-[extensions]
-hgk = 
-hgext.extdiff =
-
 [ui]
-username = phillip <philliplemons512@gmail.com>
-merge = meld
 editor = vim
+merge = meld
+diff = meld
+username = phillip <philliplemons512@gmail.com>
+
+[extensions]
+hgk =
+graphlog =
+hgext.convert =
+mq =
+extdiff =
+bookmarks =
 
 [extdiff]
 cmd.meld = meld

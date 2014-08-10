@@ -16,9 +16,10 @@ Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/syntastic'
 "Bundle 'kevinw/pyflakes-vim'
 Bundle 'Raimondi/delimitMate'
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'bling/vim-airline'
 Bundle 'yueyoum/vim-linemovement'
 Bundle 'hynek/vim-python-pep8-indent'
+Bundle 'majutsushi/tagbar'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -51,6 +52,9 @@ filetype plugin indent on    " required
 "   Syntastic {{{
         let g:syntastic_mode_map={'mode':'passive','active_filetypes':[],'passive_filetypes':[]}
 "   }}}
+"   Airline (better status bar) {{{
+		let g:airline#extensions#tabline#enabled=1
+"   }}}
 " }}}
 
 " General {{{
@@ -63,12 +67,13 @@ set autochdir		" automatically sets the cwd to the file being edited
 " Colors {{{
 syntax enable
 set t_Co=256
+" colorscheme wombat256mod " set default colorscheme
 colorscheme baycomb " set default colorscheme
 set background=dark " set background to dark
 " }}}
 
 " Spaces and Tabs {{{
-filetype indent on	" load filetype-specific intent files
+filetype indent on	" load filetype-specific indent files
 set shiftwidth=4	" Number of spaces for auto indenting also effects reindent operations (<< and >>)
 set tabstop=4		" A tab is 4 spaces"
 set softtabstop=4	" number of spaces in tab when editing
@@ -84,7 +89,9 @@ set linebreak		" only wrap at a character in breakat
 set nolist			" list diables linebreak
 set textwidth=0		" Don't insert linebreaks for wrap
 set wrapmargin=0	" Don't insert linebreaks for wrap
-set hid				" Buffers become hidden when abandoned
+set mouse=a			" Can use mouse for most actions
+set pastetoggle=<F2> " Allow toggling paste mode with F2
+set hidden			" Buffers become hidden when abandoned
 set laststatus=2	" Always show status bar
 set showcmd 		" shows command in bottom right
 set wildmenu		" visual autocomplete for command menu
@@ -95,11 +102,10 @@ set backspace=2 	" can backspace through anything
 set autoread		" automatically updates file that has been changed outside of buffer
 set scrolloff=2		" Always shows at least 2 lines of context when scrolling
 
-" Return to last edit position when opening files
-autocmd BufReadPost *
-	\ if line("'\"") > 0 && line("'\"") <= line("$") |
-	\	exe "normal! g`\"" |
-	\ endif
+" Disable backup and swap files
+set nobackup
+set nowritebackup
+set noswapfile
 
 " Remember info about open buffers on close
 set viminfo^=%
@@ -116,29 +122,41 @@ vnoremap <silent> * :call VisualSelection('f')<CR>
 " }}}
 
 " Folding {{{
+" If you have trouble with syntax highlighting try <Ctrl-l>
 set foldenable			" enable folding
 set foldlevelstart=10	" open most folds by default
 set foldnestmax=10		" 10 nested fold max
 " TODO set a folding method for different filetypes using autocmds
 " }}}
 
-" Backups {{{
-"set directory=~/.vim/swap//		" uses swap directory in .vim for all swp files
-"set undodir=~/.vim/undo//		" uses undo directory in .vim for all undo files
-" }}}
-
 " Autogroups {{{
-augroup configgroup
+
+augroup allgroup
 	autocmd!
-	autocmd VimEnter * highlight clear SignColumn
-	autocmd FileType java setlocal noexpandtab
-	autocmd FileType java setlocal listchars=tab:+\ ,eol:-
-	autocmd BufEnter *.cls setlocal filetype = java
+	autocmd BufWritePre * :call DeleteTrailingWS()
+	autocmd BufEnter * filetype detect
+	autocmd BufEnter * AirlineRefresh
+
+	" Return to last edit position when opening files
+	autocmd BufReadPost *
+		\ if line("'\"") > 0 && line("'\"") <= line("$") |
+		\	exe "normal! g`\"" |
+		\ endif
 augroup END
 
+augroup configgroup
+	autocmd!
+	autocmd! BufWritePost .vimrc source %   " Automatically reload config file when saved
+augroup END
 " }}}
 
 " Custom Functions {{{
+
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
 
 " toggle between number and relativenumber and no number
 function! ToggleNumber()
@@ -192,6 +210,9 @@ endfunction
 
 " General Key Mappings {{{
 
+" Toggle Tagbar
+nmap T :TagbarToggle<CR>
+
 " Allow easy window switching
 nmap <silent> <S-Up> :wincmd k<CR>
 nmap <silent> <S-Down> :wincmd j<CR>
@@ -203,20 +224,32 @@ nmap <C-Up> zk
 nmap <C-Down> zj
 
 " move vertically by visual line not real line
-nnoremap <Down> gj
-nnoremap <Up> gk
+nnoremap j gj
+nnoremap k gk
 nnoremap <End> g<End>
 nnoremap <Home> g<Home>
-imap <Down> <C-o>gj
-imap <Up> <C-o>gk
 imap <End> <C-o>g<End>
 imap <Home> <C-o>g<Home>
+
+" Arrow keys are for wimps
+nnoremap <Down> <nop>
+nnoremap <Up> <nop>
+nnoremap <Left> <nop>
+nnoremap <right> <nop>
+imap <Down> <nop>
+imap <Up> <nop>
+imap <Left> <nop>
+imap <right> <nop>
 
 " highlight last inserted text
 nnoremap gV `[v`]
 
 " maps space to open and close folds
 nnoremap <space> za
+
+" easier moving of code blocks
+vnoremap < <gv
+vnoremap > >gv
 
 " }}}
 
@@ -234,14 +267,21 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>
 nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>
 
-" Map ,n to ToggleNumber
-nnoremap <leader>n :call ToggleNumber()<CR>
+" change tabs with ,tn and ,tm
+nnoremap <leader>tn :tabp<CR>
+nnoremap <leader>tm :tabp<CR>
 
-" Map ,x to toggle syntastic checker
+" change buffers with ,k and ,j
+nnoremap <leader>j :bp<CR>
+nnoremap <leader>k :bn<CR>
+
+" Close the current buffer
+noremap <leader>bd :bp<bar>sp<bar>bn<bar>bd<CR>
+
+" Toggle preferences
+nnoremap <leader>c :call ToggleNumber()<CR>
 nnoremap <leader>x :SyntasticToggleMode<CR>
-
-" Toggle list
-nnoremap <leader>l :set list!<CR>
+nnoremap <leader>z :set list!<CR>
 
 " Spell check stuff
 nnoremap <leader>s :set spell!<CR>
@@ -249,15 +289,18 @@ nnoremap <leader>sn ]s
 nnoremap <leader>sp [s
 nnoremap <leader>se z=
 
+" Quick save command
+nnoremap <leader>w :write<CR>
+
+" Quick quit command
+nnoremap <leader>q :quit<CR>
+
 " Search and replace with <leader>r
 vnoremap <silent><leader>r :call VisualSelection('replace')<CR>
 
 " 'super save' saves an assortment of windows that can be reopened with vim -S
 nnoremap <leader>s :mksession<CR>
 " }}}
-
-" might not be good for javascript
-iab === ==================================
 
 " Last 5 lines are modelines
 set modelines=5
