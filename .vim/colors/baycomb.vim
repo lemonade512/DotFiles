@@ -135,7 +135,8 @@ hi Visual   ctermbg=grey ctermfg=blue cterm=NONE
 hi VisualNOS    ctermbg=grey ctermfg=blue cterm=NONE
 hi WarningMsg   ctermfg=1
 hi WildMenu ctermfg=0 ctermbg=3
-hi Folded   ctermfg=darkgreen ctermbg=darkblue cterm=NONE
+"hi Folded   ctermfg=darkgreen ctermbg=darkblue cterm=NONE
+hi Folded ctermfg=darkgreen ctermbg=235
 hi FoldColumn   ctermfg=yellow ctermbg=black
 hi DiffAdd  ctermbg=4
 hi DiffChange   ctermbg=5
@@ -177,7 +178,8 @@ hi tabline      ctermfg=black ctermbg=blue
 hi tablinefill  ctermfg=green ctermbg=darkblue
 "vim: sw=4
 "
-hi MatchParen   ctermfg=black ctermbg=green
+"hi MatchParen   ctermfg=black ctermbg=green
+hi MatchParen ctermfg=green ctermbg=black
 
 
 elseif &background == "light"
@@ -317,3 +319,4 @@ hi PmenuSel     ctermbg=lightblue ctermfg=white
 "vim: sw=4
 
 endif
+
