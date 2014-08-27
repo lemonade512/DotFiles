@@ -9,7 +9,7 @@ alias grepn="grep -s -I -n --color=auto"
 
 alias ls="ls --color=auto"
 alias la="ls -A"
-alias ll="ls -l"
+alias ll="ls -la"
 # }}}
 
 # Shortcuts {{{

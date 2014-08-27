@@ -1,0 +1,8 @@
+Main script to start and stop everything:
+	/usr/sbin/apache2ctl
+
+Logs
+	/var/log/apache2/
+
+Config file
+	/etc/apache2/conf.d/

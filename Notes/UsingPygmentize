@@ -1,0 +1,1 @@
+pygmentize -f html -O full,style=monokai -o <output_file> <input_file>
