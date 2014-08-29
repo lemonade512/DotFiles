@@ -13,7 +13,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'scrooloose/syntastic'
+"Bundle 'scrooloose/syntastic'
 "Bundle 'kevinw/pyflakes-vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'bling/vim-airline'
@@ -48,6 +48,9 @@ filetype plugin indent on    " required
         " list
         let g:ycm_key_list_select_completion=['<TAB>', '<C-Down>']
         let g:ycm_key_list_previous_completion=['<S-TAB>', '<C_Up>']
+
+		let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+		let g:ycm_show_diagnostics_ui = 0
 "	}}}
 "   Syntastic {{{
         let g:syntastic_mode_map={'mode':'passive','active_filetypes':[],'passive_filetypes':[]}
@@ -136,6 +139,7 @@ augroup allgroup
 	autocmd BufWritePre * :call DeleteTrailingWS()
 	autocmd BufEnter * filetype detect
 	autocmd BufEnter * AirlineRefresh
+	autocmd BufEnter * :lchdir %:p:h
 
 	" Return to last edit position when opening files
 	autocmd BufReadPost *

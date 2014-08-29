@@ -10,5 +10,7 @@ let g:syntastic_python_checkers = ['pylint', 'pyflakes']
 "set background=dark
 
 " Setup color scheme
-set background=dark
-colorscheme badwolf
+let g:zenburn_high_Contrast=1
+colorscheme zenburn
+
+set foldmethod=indent
