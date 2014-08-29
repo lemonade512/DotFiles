@@ -6,7 +6,7 @@ that I use during development.
 The installation script was inspired by (and mostly copied from) https://github.com/hashrocket/dotmatrix.
 
 <h1>Installation Instructions</h1>
-In a terminal run the following commands in your home directory:
-	git clone https://github.com/lemonade512/DotFiles.git
-	cd DotFiles
-	bin/install.sh
+In a terminal run the following commands in your home directory:<br>
+	git clone https://github.com/lemonade512/DotFiles.git<br>
+	cd DotFiles<br>
+	bin/install.sh<br>
