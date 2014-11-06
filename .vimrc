@@ -129,6 +129,7 @@ vnoremap <silent> * :call VisualSelection('f')<CR>
 set foldenable			" enable folding
 set foldlevelstart=10	" open most folds by default
 set foldnestmax=10		" 10 nested fold max
+set foldmethod=indent
 " TODO set a folding method for different filetypes using autocmds
 " }}}
 

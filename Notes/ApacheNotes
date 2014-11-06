@@ -6,3 +6,7 @@ Logs
 
 Config file
 	/etc/apache2/conf.d/
+
+PHP ini file
+	/etc/php5/apache2/php.ini
+	/etc/php5/conf.d
