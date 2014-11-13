@@ -17,6 +17,21 @@ function colors() {
     done
 }
 
+function confirm() {
+    read -p "$1" -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ ! $REPLY =~ ^[Yy]$ ]]
+    then
+        exit 1
+    fi
+}
+
+function exiterr() {
+    # Exits with $1 error message and $2 error code
+    echoerr -e "$(color 196)ERROR$RESET: $1"
+    exit $2
+}
+
 function welcome_msg() {
     clear
     tput setaf 1 # Set terminal to output red

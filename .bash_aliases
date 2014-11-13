@@ -7,6 +7,11 @@ alias egrep="grep -E"
 
 alias grepn="grep -s -I -n --color=auto"
 
+# Example usage: grep "Some string" * && alert "Message"
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+alias pylint="pylint --rcfile ~/.pylintrc"
+
 alias ls="ls --color=auto"
 alias la="ls -A"
 alias ll="ls -la"
@@ -14,8 +19,7 @@ alias ll="ls -la"
 
 # Shortcuts {{{
 alias vbrc="vim ~/.bashrc && source ~/.bashrc"
-alias pylint="pylint --rcfile ~/.pylintrc"
-alias back="cd $OLDPWD"
+alias back="cd - > /dev/null"
 alias h="history | grep"
 alias reload="source ~/.bashrc"
 # }}}

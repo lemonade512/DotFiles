@@ -70,7 +70,7 @@ set autochdir		" automatically sets the cwd to the file being edited
 " Colors {{{
 syntax enable
 set t_Co=256
-" colorscheme wombat256mod " set default colorscheme
+"colorscheme wombat256mod " set default colorscheme
 colorscheme baycomb " set default colorscheme
 set background=dark " set background to dark
 " }}}
@@ -138,7 +138,6 @@ set foldmethod=indent
 augroup allgroup
 	autocmd!
 	autocmd BufWritePre * :call DeleteTrailingWS()
-	autocmd BufEnter * filetype detect
 	autocmd BufEnter * AirlineRefresh
 	autocmd BufEnter * :lchdir %:p:h
 
@@ -256,6 +255,22 @@ nnoremap <space> za
 vnoremap < <gv
 vnoremap > >gv
 
+" Abbreviation for the time and date
+iab xdate <C-r>=strftime("%c")<CR>
+
+" Key mappings for Line dividers
+imap <buffer> ;ld= ==============================================================================================
+imap <buffer> ;ld- ----------------------------------------------------------------------------------------------
+imap <buffer> ;ld* **********************************************************************************************
+
+" Template key mappings
+"imap <buffer> ;; <C-O>/%%%<CR><C-O>c3l
+nmap <buffer> ;; /%%%<CR>c3l
+
+imap <buffer> ;pycls <C-O>mzclass %%%(%%%):<CR>'''<CR>%%%<CR>'''<CR><CR>def __init__(self, %%%):<CR>%%%<C-O>'z;;
+imap <buffer> ;pyhead <C-O>mz#!/usr/bin/python<CR># -*- encoding: utf-8 -*-<CR>"""<CR>Created on xdate<CR><CR>%%%<CR><CR>@author: klemons<CR>"""<CR><CR>from sys import path<CR>path.append("../Linux-x86_64-swig")<CR><C-O>'z;;
+imap <buffer> ;pyfunc <C-O>mzdef %%%(%%%):<CR>'''<CR>%%%<CR>'''<CR><CR>%%%<C-O>'z;;
+
 " }}}
 
 " Leader Key Mappings {{{
@@ -295,7 +310,7 @@ nnoremap <leader>sp [s
 nnoremap <leader>se z=
 
 " Quick save command
-nnoremap <leader>w :write<CR>
+nnoremap <leader>w :call DeleteTrailingWS()<CR>:write<CR>
 
 " Quick quit command
 nnoremap <leader>q :quit<CR>
