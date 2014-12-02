@@ -53,7 +53,7 @@ filetype plugin indent on    " required
 		let g:ycm_show_diagnostics_ui = 0
 "	}}}
 "   Syntastic {{{
-        let g:syntastic_mode_map={'mode':'passive','active_filetypes':[],'passive_filetypes':[]}
+        "let g:syntastic_mode_map={'mode':'active','active_filetypes':[],'passive_filetypes':[]}
 "   }}}
 "   Airline (better status bar) {{{
 		let g:airline#extensions#tabline#enabled=1

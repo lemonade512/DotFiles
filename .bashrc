@@ -121,4 +121,5 @@ if [ -e "$HOME/DotFiles/z/z.sh" ]; then
 	. "$HOME/DotFiles/z/z.sh"
 fi
 
-export PYTHONPATH="${PYTHONPATH}:$HOME/Documents/PythonProjects/RPG"
+export PYTHONPATH="${PYTHONPATH}:$HOME/Documents/RPG"
+export PYTHONPATH="${PYTHONPATH}:$HOME/Documents/Algorithms"
