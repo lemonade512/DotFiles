@@ -51,6 +51,7 @@ filetype plugin indent on    " required
 
 		let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 		let g:ycm_show_diagnostics_ui = 0
+		"let g:ycm_auto_trigger = 0
 "	}}}
 "   Syntastic {{{
         "let g:syntastic_mode_map={'mode':'active','active_filetypes':[],'passive_filetypes':[]}

@@ -123,3 +123,5 @@ fi
 
 export PYTHONPATH="${PYTHONPATH}:$HOME/Documents/RPG"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Documents/Algorithms"
+export PYTHONPATH="${PYTHONPATH}:$HOME/Documents/CharacterKeeper"
+export PYTHONPATH="${PYTHONPATH}:$HOME/Documents/Bundle"
