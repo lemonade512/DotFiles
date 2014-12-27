@@ -13,4 +13,4 @@ let g:syntastic_python_checkers = ['pylint', 'pyflakes']
 let g:zenburn_high_Contrast=1
 colorscheme zenburn
 
-set foldmethod=indent
+"set foldmethod=indent

@@ -153,6 +153,9 @@ augroup configgroup
 	autocmd!
 	autocmd! BufWritePost .vimrc source %   " Automatically reload config file when saved
 augroup END
+
+" Add a custom filetype for testing
+au BufNewFile,BufRead *.pn set filetype=potion
 " }}}
 
 " Custom Functions {{{
