@@ -168,21 +168,21 @@ endfunc
 
 " toggle between number and relativenumber and no number
 function! ToggleNumber()
-	if !exists("g:number_status")
-		let g:number_status = 2
+	if !exists("b:number_status")
+		let b:number_status = 2
 	endif
 
-	if (g:number_status == 1)
+	if (b:number_status == 1)
 		set norelativenumber
 		set nonu
-		let g:number_status = 2
-	elseif (g:number_status == 2)
+		let b:number_status = 2
+	elseif (b:number_status == 2)
 		set norelativenumber
 		set number
-		let g:number_status = 3
+		let b:number_status = 3
 	else
 		set relativenumber
-		let g:number_status = 1
+		let b:number_status = 1
 	endif
 
 endfunc
@@ -263,9 +263,9 @@ vnoremap > >gv
 iab xdate <C-r>=strftime("%c")<CR>
 
 " Key mappings for Line dividers
-imap <buffer> ;ld= ==============================================================================================
-imap <buffer> ;ld- ----------------------------------------------------------------------------------------------
-imap <buffer> ;ld* **********************************************************************************************
+imap ;ld= ==============================================================================================
+imap ;ld- ----------------------------------------------------------------------------------------------
+imap ;ld* **********************************************************************************************
 
 " Template key mappings
 "imap <buffer> ;; <C-O>/%%%<CR><C-O>c3l
