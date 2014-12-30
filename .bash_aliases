@@ -18,6 +18,7 @@ alias pylint="pylint --rcfile ~/.pylintrc"
 alias ls="ls --color=auto"
 alias la="ls -A"
 alias ll="ls -la"
+
 # }}}
 
 # Shortcuts {{{
