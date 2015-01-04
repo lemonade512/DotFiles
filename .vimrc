@@ -66,6 +66,9 @@ filetype plugin on	" Allows use of filetype plugins
 set encoding=utf-8	" Sets encoding to utf-8
 let mapleader=","	" Changes leader key from \ to ,
 set autochdir		" automatically sets the cwd to the file being edited
+
+" Doesn't default to plaintex
+let g:tex_flavor = "latex"
 " }}}
 
 " Colors {{{
@@ -323,7 +326,7 @@ nnoremap <leader>q :quit<CR>
 vnoremap <silent><leader>r :call VisualSelection('replace')<CR>
 
 " 'super save' saves an assortment of windows that can be reopened with vim -S
-nnoremap <leader>s :mksession<CR>
+"nnoremap <leader>s :mksession<CR>
 " }}}
 
 " Last 5 lines are modelines
