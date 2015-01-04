@@ -1,0 +1,19 @@
+View Installed Packages
+=======================
+To get a list of packages installed locally:
+
+	dpkg --get-selections | grep -v deinstall
+
+Use synaptic (It is an awesome GUI)
+
+View recently installed packages
+
+	cat /var/log/dpkg.log | grep "\ install\ "
+					OR
+	awk '$3~/^install$/ {print $4;}' /var/log/dpkg.log
+
+
+Install Latex Packages
+=======================
+Use tlmgr
+	tlmgr install <packagename>
