@@ -39,3 +39,10 @@ Here is a list of other useful tools:
 			problem process, it also shows error codes (errno) when system
 			calls fail. This information often says enough for understanding
 			the system behavior and solving a problem.
+
+
+Google Chrome
+=============
+
+websites for autocomplete are stored in ~/.config/google-chrome/Default
+The 'Top Sites' file is an sqlite3 database.
