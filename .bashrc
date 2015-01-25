@@ -125,3 +125,7 @@ export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/RPG"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/Algorithms"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/CharacterKeeper"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/Bundle"
+
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
+export GOPATH=$HOME/go

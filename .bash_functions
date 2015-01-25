@@ -121,6 +121,12 @@ function upstr() {
 }
 # }}}
 
+function file_open() {
+    # Opens a file using xdg-open
+    echo "Opening $1 ..."
+    xdg-open $1 2> /dev/null
+}
+
 # do sudo, or sudo last command if no argument given
 function s() {
     if [[ $# == 0 ]]; then

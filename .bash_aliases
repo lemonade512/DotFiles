@@ -8,7 +8,7 @@ alias egrep="grep -E"
 alias grepn="grep -s -I -n --color=auto"
 
 #NOTE this overrides an existing linux command called open
-alias open="xdg-open"
+alias open="file_open"
 
 # Example usage: grep "Some string" * && alert "Message"
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -26,6 +26,7 @@ alias vbrc="vim ~/.bashrc && source ~/.bashrc"
 alias back="cd - > /dev/null"
 alias h="history | grep"
 alias reload="source ~/.bashrc"
+alias realias="$EDITOR ~/.bash_aliases; source ~/.bash_aliases"
 # }}}
 
 # Package Management {{{
