@@ -13,13 +13,19 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 Bundle 'Valloric/YouCompleteMe'
-"Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/syntastic'
 "Bundle 'kevinw/pyflakes-vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'bling/vim-airline'
 Bundle 'yueyoum/vim-linemovement'
 Bundle 'hynek/vim-python-pep8-indent'
 Bundle 'majutsushi/tagbar'
+
+" Used for javascript stuff
+Bundle 'marijnh/tern_for_vim'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'pangloss/vim-javascript'
+Bundle 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -54,7 +60,7 @@ filetype plugin indent on    " required
 		"let g:ycm_auto_trigger = 0
 "	}}}
 "   Syntastic {{{
-        "let g:syntastic_mode_map={'mode':'active','active_filetypes':[],'passive_filetypes':[]}
+        let g:syntastic_mode_map={'mode':'active','active_filetypes':[],'passive_filetypes':[]}
 "   }}}
 "   Airline (better status bar) {{{
 		let g:airline#extensions#tabline#enabled=1
