@@ -124,7 +124,7 @@ function upstr() {
 function file_open() {
     # Opens a file using xdg-open
     echo "Opening $1 ..."
-    xdg-open $1 > /dev/null 2>&1
+    xdg-open "$1" > /dev/null 2>&1
 }
 
 # do sudo, or sudo last command if no argument given
