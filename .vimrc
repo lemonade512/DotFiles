@@ -21,6 +21,10 @@ Bundle 'yueyoum/vim-linemovement'
 Bundle 'hynek/vim-python-pep8-indent'
 Bundle 'majutsushi/tagbar'
 
+" Vim notes
+Bundle 'xolox/vim-notes'
+Bundle 'xolox/vim-misc'
+
 " Used for javascript stuff
 Bundle 'marijnh/tern_for_vim'
 Bundle 'jelera/vim-javascript-syntax'
@@ -65,6 +69,9 @@ filetype plugin indent on    " required
 "   Airline (better status bar) {{{
 		let g:airline#extensions#tabline#enabled=1
 "   }}}
+"	Notes {{{
+		let g:notes_directories = ['~/Notes']
+"	}}}
 " }}}
 
 " General {{{

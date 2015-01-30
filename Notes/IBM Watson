@@ -1,0 +1,36 @@
+IBM Watson
+
+First computer: Sundial
+   • Input: Sunlight
+   • Output: Time
+
+Next: Abacus
+   • Input: Local operations
+   • Output: Global quantities
+
+Charles Babbage:
+   • Fathers of modern computer science
+   • Difference engine he designed proved too expensive to build during his time (1822)
+   • A replica was first built in 1991
+   • Also defined an analytical engine programmed with punch cards
+
+Lorenz Machine:
+   • Used by Germans military during second world war
+   • Cipher broken by Alan Turing
+
+ENIAC:
+   • First electronic general purpose computer
+   • Used to calculate artillery firing positions
+   • Heralded as the “Giant Brain”
+
+                                     * * *
+
+
+## Formalizing Computation
+
+Started by Hilbert:
+   • Wanted to turn every mathematical proposition into a formula
+   • Proposed that all mathematics should be based on simple axioms
+   • Wanted to prove that a system has no contradictions
+      ◦ Goedel proved this is not possible to prove
+

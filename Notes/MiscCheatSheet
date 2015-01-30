@@ -1,4 +1,6 @@
-View Installed Packages
+MiscCheatSheet
+
+#View Installed Packages
 =======================
 To get a list of packages installed locally:
 
@@ -13,7 +15,15 @@ View recently installed packages
 	awk '$3~/^install$/ {print $4;}' /var/log/dpkg.log
 
 
-Install Latex Packages
+#Install Latex Packages
 =======================
 Use tlmgr
 	tlmgr install <packagename>
+
+
+# Neat Linux Commands
+   • `file` Attempts to classify whatever you pass it as an argument.
+      ◦ Is the file an executable?
+      ◦ Is the file a python script?
+   • `objdump -S -l -C -F -t -w <program> | less` will let you see
+     the disassembly of a compiled program.
