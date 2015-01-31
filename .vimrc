@@ -21,6 +21,12 @@ Plugin 'yueyoum/vim-linemovement'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'majutsushi/tagbar'
 
+" Better starting screen
+Plugin 'mhinz/vim-startify'
+
+" Session manager
+Plugin 'xolox/vim-session'
+
 " Vim notes
 Plugin 'xolox/vim-notes'
 Plugin 'xolox/vim-misc'
@@ -72,6 +78,26 @@ filetype plugin indent on    " required
 "   }}}
 "	Notes {{{
 		let g:notes_directories = ['~/Notes']
+"	}}}
+"	Session {{{
+		let g:session_directory = '~/.vim/sessions'
+		let g:session_autosave='no'
+		let g:session_autoload='no'
+"	}}}
+"	Startify {{{
+		let g:startify_session_dir = "~/.vim/sessions"
+		"let g:startify_list_order = ['sessions', 'bookmarks', 'dir', 'files']
+		let g:startify_list_order = [
+			\ ['My Sessions:'], 'sessions',
+			\ ['My Bookmarks:'], 'bookmarks',
+			\ ['Most Recently Used Files:'], 'files']
+		let g:startify_bookmarks = ['~/.vimrc']
+		let g:startify_custom_header = [
+			\ '  Always code as if the guy who ends up maintaining your code',
+			\ '  will be a violent psychopath who knows where you live.',
+			\ '							- Rick Osbourne',
+			\ '',
+			\ '']
 "	}}}
 " }}}
 
@@ -168,7 +194,8 @@ augroup END
 
 augroup configgroup
 	autocmd!
-	autocmd! BufWritePost .vimrc source %   " Automatically reload config file when saved
+	autocmd BufWritePost .vimrc source %   " Automatically reload config file when saved
+	autocmd BufWritePost .vimrc set foldmethod=marker
 augroup END
 
 " Add a custom filetype for testing
@@ -340,7 +367,7 @@ nnoremap <leader>q :quit<CR>
 vnoremap <silent><leader>r :call VisualSelection('replace')<CR>
 
 " 'super save' saves an assortment of windows that can be reopened with vim -S
-"nnoremap <leader>s :mksession<CR>
+nnoremap <leader>ms :SaveSession<CR>
 " }}}
 
 " Last 5 lines are modelines

@@ -1,3 +1,5 @@
+LinuxDebugging
+
 Network Debugging
 =================
 
@@ -46,3 +48,7 @@ Google Chrome
 
 websites for autocomplete are stored in ~/.config/google-chrome/Default
 The 'Top Sites' file is an sqlite3 database.
+
+Restart Linux Screen
+====================
+sudo service lightdm restart
