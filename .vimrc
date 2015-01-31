@@ -12,24 +12,24 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'scrooloose/syntastic'
-"Bundle 'kevinw/pyflakes-vim'
-Bundle 'Raimondi/delimitMate'
-Bundle 'bling/vim-airline'
-Bundle 'yueyoum/vim-linemovement'
-Bundle 'hynek/vim-python-pep8-indent'
-Bundle 'majutsushi/tagbar'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/syntastic'
+"Plugin 'kevinw/pyflakes-vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'bling/vim-airline'
+Plugin 'yueyoum/vim-linemovement'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'majutsushi/tagbar'
 
 " Vim notes
-Bundle 'xolox/vim-notes'
-Bundle 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
+Plugin 'xolox/vim-misc'
 
 " Used for javascript stuff
-Bundle 'marijnh/tern_for_vim'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'pangloss/vim-javascript'
-Bundle 'nathanaelkane/vim-indent-guides'
+Plugin 'marijnh/tern_for_vim'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -68,6 +68,7 @@ filetype plugin indent on    " required
 "   }}}
 "   Airline (better status bar) {{{
 		let g:airline#extensions#tabline#enabled=1
+		let g:airline_powerline_fonts = 1
 "   }}}
 "	Notes {{{
 		let g:notes_directories = ['~/Notes']
