@@ -77,7 +77,7 @@ filetype plugin indent on    " required
 		let g:airline_powerline_fonts = 1
 "   }}}
 "	Notes {{{
-		let g:notes_directories = ['~/Notes']
+		let g:notes_directories = ['~/Documents/Notes']
 "	}}}
 "	Session {{{
 		let g:session_directory = '~/.vim/sessions'
