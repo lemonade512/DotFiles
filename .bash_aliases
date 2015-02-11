@@ -5,6 +5,11 @@ alias grep="grep --color=auto"
 alias fgrep="grep -F"
 alias egrep="grep -E"
 
+# Prompt if overrite
+alias mv="mv -i"
+alias cp="cp -i"
+alias rm="rm -I"
+
 alias grepn="grep -s -I -n --color=auto"
 
 #NOTE this overrides an existing linux command called open

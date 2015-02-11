@@ -129,6 +129,5 @@ export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/Algorithms"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/CharacterKeeper"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/Bundle"
 
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/go/bin
-export GOPATH=$HOME/go
+# Java class path
+export CLASSPATH=$CLASSPATH:/usr/share/java/junit-4.10.jar
