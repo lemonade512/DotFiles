@@ -16,6 +16,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 "Plugin 'kevinw/pyflakes-vim'
 Plugin 'Raimondi/delimitMate'
+Plugin 'tpope/vim-surround'
 Plugin 'bling/vim-airline'
 Plugin 'yueyoum/vim-linemovement'
 Plugin 'hynek/vim-python-pep8-indent'
@@ -36,6 +37,9 @@ Plugin 'marijnh/tern_for_vim'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 Plugin 'nathanaelkane/vim-indent-guides'
+
+" Used for HTML/CSS
+Plugin 'mattn/emmet-vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required

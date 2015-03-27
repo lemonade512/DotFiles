@@ -21,8 +21,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias pylint="pylint --rcfile ~/.pylintrc"
 
 alias ls="ls --color=auto"
+alias ll="ls -alF"
 alias la="ls -A"
-alias ll="ls -la"
 
 # }}}
 

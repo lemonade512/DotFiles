@@ -122,12 +122,9 @@ if [ -e "$HOME/DotFiles/z/z.sh" ]; then
 fi
 
 # Make terminal title reflect current directory
-PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+PROMPT_COMMAND=$PROMPT_COMMAND'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/RPG"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/Algorithms"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/CharacterKeeper"
-export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/Bundle"
 
-# Java class path
-export CLASSPATH=$CLASSPATH:/usr/share/java/junit-4.10.jar
