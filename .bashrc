@@ -124,6 +124,8 @@ fi
 # Make terminal title reflect current directory
 PROMPT_COMMAND=$PROMPT_COMMAND'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
+export PATH=$PATH:~/bin
+
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/RPG"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/Algorithms"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/CharacterKeeper"
