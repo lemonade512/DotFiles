@@ -92,7 +92,9 @@ shopt -s cdspell
 set -o vi
 
 export EDITOR=/usr/bin/vim
-export TERM=xterm-256color
+if [[ $TERM == xterm ]]; then
+    TERM=xterm-256color
+fi
 # }}}
 
 # make less more friendly for non-text input files, see lesspipe(1)
