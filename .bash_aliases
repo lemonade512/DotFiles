@@ -32,6 +32,7 @@ alias back="cd - > /dev/null"
 alias h="history | grep"
 alias reload="source ~/.bashrc"
 alias realias="$EDITOR ~/.bash_aliases; source ~/.bash_aliases"
+alias kaenv="source ~/.virtualenv/khan27/bin/activate"
 # }}}
 
 # Package Management {{{

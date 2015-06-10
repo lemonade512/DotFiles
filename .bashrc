@@ -3,6 +3,29 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# ANSI color codes {{{
+RS=$'\[\033[00m\]'    # reset
+HC=$'\[\033[01m\]'    # hicolor
+UL=$'\[\033[04m\]'    # underline
+INV=$'\[\033[07m\]'   # inverse background and foreground
+FBLK=$'\[\033[30m\]' # foreground black
+FRED=$'\[\033[31m\]' # foreground red
+FGRN=$'\[\033[32m\]' # foreground green
+FYEL=$'\[\033[33m\]' # foreground yellow
+FBLE=$'\[\033[34m\]' # foreground blue
+FMAG=$'\[\033[35m\]' # foreground magenta
+FCYN=$'\[\033[36m\]' # foreground cyan
+FWHT=$'\[\033[37m\]' # foreground white
+BBLK=$'\[\033[40m\]' # background black
+BRED=$'\[\033[41m\]' # background red
+BGRN=$'\[\033[42m\]' # background green
+BYEL=$'\[\033[43m\]' # background yellow
+BBLE=$'\[\033[44m\]' # background blue
+BMAG=$'\[\033[45m\]' # background magenta
+BCYN=$'\[\033[46m\]' # background cyan
+BWHT=$'\[\033[47m\]' # background white
+# }}}
+
 # Source Files {{{
 
 # Source global definitions {{{
@@ -25,6 +48,17 @@ fi
 
 # }}}
 
+# Prompt {{{
+
+PS1="\n${HC}[ ${RS}${FRED}\u@\h ${RS}${HC}] ${HC}${FGRN}\w${RS}\n${HC}${FRED}\$${RS} "
+#PS1='\n\[\033[01m\][ \[\033[00;34m\]\u@\h \[\033[00m\]\[\033[01m\]] \[\033[01;32m\]\w\[\033[00m\]\n\[\033[01;34m\]$\[\033[00m\]'
+
+# }}}
+
+if [ -s ~/.bashrc.khan ]; then
+    . ~/.bashrc.khan
+fi
+
 if [ -f ~/.bash_aliases ]; then
 	. ~/.bash_aliases
 fi
@@ -38,29 +72,6 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
-# }}}
-
-# ANSI color codes {{{
-RS=$'\[\033[00m\]'    # reset
-HC=$'\[\033[01m\]'    # hicolor
-UL=$'\[\033[04m\]'    # underline
-INV=$'\[\033[07m\]'   # inverse background and foreground
-FBLK=$'\[\033[30m\]' # foreground black
-FRED=$'\[\033[31m\]' # foreground red
-FGRN=$'\[\033[32m\]' # foreground green
-FYEL=$'\[\033[33m\]' # foreground yellow
-FBLE=$'\[\033[34m\]' # foreground blue
-FMAG=$'\[\033[35m\]' # foreground magenta
-FCYN=$'\[\033[36m\]' # foreground cyan
-FWHT=$'\[\033[37m\]' # foreground white
-BBLK=$'\[\033[40m\]' # background black
-BRED=$'\[\033[41m\]' # background red
-BGRN=$'\[\033[42m\]' # background green
-BYEL=$'\[\033[43m\]' # background yellow
-BBLE=$'\[\033[44m\]' # background blue
-BMAG=$'\[\033[45m\]' # background magenta
-BCYN=$'\[\033[46m\]' # background cyan
-BWHT=$'\[\033[47m\]' # background white
 # }}}
 
 # History Control {{{
@@ -100,13 +111,6 @@ fi
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# Prompt {{{
-
-PS1="\n${HC}[ ${RS}${FRED}\u@\h ${RS}${HC}] ${HC}${FGRN}\w${RS}\n${HC}${FRED}\$${RS} "
-#PS1='\n\[\033[01m\][ \[\033[00;34m\]\u@\h \[\033[00m\]\[\033[01m\]] \[\033[01;32m\]\w\[\033[00m\]\n\[\033[01;34m\]$\[\033[00m\]'
-
-# }}}
-
 # LESS man page colors {{{
 
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -119,6 +123,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 # }}}
 
+PROMPT_COMMAND=""
 if [ -e "$HOME/DotFiles/z/z.sh" ]; then
 	. "$HOME/DotFiles/z/z.sh"
 fi
@@ -127,7 +132,16 @@ fi
 PROMPT_COMMAND=$PROMPT_COMMAND'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
 export PATH=$PATH:~/bin
+export PATH=~/khan/devtools/arcanist/khan-bin:$PATH
 
+# Make sure standard library is preferred over files in current directory
+# NOTE: This is to fix a 'bug' with YCM where we couldn't import email from
+#       the standard library if there as an email.py in the current directory.
+# WARNING: This may break python files that actually import email.py not from
+#          the standard library
+#export PYTHONPATH="/usr/lib/python2.7:${PYTHONPATH}"
+
+# Set up project paths
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/RPG"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/Algorithms"
 export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/CharacterKeeper"
