@@ -14,6 +14,7 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
+Plugin 'kien/ctrlp.vim'
 "Plugin 'kevinw/pyflakes-vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-surround'
@@ -24,6 +25,11 @@ Plugin 'majutsushi/tagbar'
 
 " Better starting screen
 Plugin 'mhinz/vim-startify'
+
+" Syntax hilighting for less
+Plugin 'groenewege/vim-less'
+Plugin 'skammer/vim-css-color'
+Plugin 'hail2u/vim-css3-syntax'
 
 " Session manager
 Plugin 'xolox/vim-session'
@@ -53,7 +59,8 @@ filetype plugin indent on    " required
 " :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
 "
 " see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+
+set rtp+=~/.vim/after/hack.vim
 " }}}
 
 " Package Configuration {{{
@@ -121,6 +128,13 @@ set t_Co=256
 "colorscheme wombat256mod " set default colorscheme
 colorscheme baycomb " set default colorscheme
 set background=dark " set background to dark
+
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
 " }}}
 
 " Spaces and Tabs {{{
