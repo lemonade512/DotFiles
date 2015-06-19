@@ -26,8 +26,6 @@ BCYN=$'\[\033[46m\]' # background cyan
 BWHT=$'\[\033[47m\]' # background white
 # }}}
 
-# Source Files {{{
-
 # Source global definitions {{{
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
@@ -48,12 +46,16 @@ fi
 
 # }}}
 
-# Prompt {{{
+# Custom Prompt {{{
 
+# NOTE this MUST come before the custom definition sourcing because otherwise the prompt is screwed up when you deactivate
+#      the khan academy virtual environment
 PS1="\n${HC}[ ${RS}${FRED}\u@\h ${RS}${HC}] ${HC}${FGRN}\w${RS}\n${HC}${FRED}\$${RS} "
 #PS1='\n\[\033[01m\][ \[\033[00;34m\]\u@\h \[\033[00m\]\[\033[01m\]] \[\033[01;32m\]\w\[\033[00m\]\n\[\033[01;34m\]$\[\033[00m\]'
 
 # }}}
+
+# Source custom definitions {{{
 
 if [ -s ~/.bashrc.khan ]; then
     . ~/.bashrc.khan
@@ -106,10 +108,11 @@ export EDITOR=/usr/bin/vim
 if [[ $TERM == xterm ]]; then
     TERM=xterm-256color
 fi
-# }}}
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# }}}
 
 # LESS man page colors {{{
 
@@ -123,6 +126,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 # }}}
 
+# Reset PROMPT COMMAND so sourcing this file is idempotent
 PROMPT_COMMAND=""
 if [ -e "$HOME/DotFiles/z/z.sh" ]; then
 	. "$HOME/DotFiles/z/z.sh"
@@ -133,6 +137,10 @@ PROMPT_COMMAND=$PROMPT_COMMAND'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"
 
 export PATH=$PATH:~/bin
 export PATH=~/khan/devtools/arcanist/khan-bin:$PATH
+
+# Set up GO for google drive: https://github.com/odeke-em/drive
+export GOPATH=$HOME/gopath
+export PATH=$GOPATH:$GOPATH/bin:$PATH
 
 # Make sure standard library is preferred over files in current directory
 # NOTE: This is to fix a 'bug' with YCM where we couldn't import email from
