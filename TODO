@@ -3,5 +3,7 @@
 #      the PATH and PYTHONPATH variables will become bloated
 # TODO figure out why .bashrc gets source twice on startup and fix it
 # TODO fix issues with javascript highlighting and indentation
+# TODO make javascript folding fold the docstring
+# TODO add a command to change vim to complete default so others can use
 
 # vim: set filetype=conf
