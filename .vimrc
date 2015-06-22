@@ -119,6 +119,10 @@ set encoding=utf-8	" Sets encoding to utf-8
 let mapleader=","	" Changes leader key from \ to ,
 set autochdir		" automatically sets the cwd to the file being edited
 
+" Makes it easier to use 'O' without waiting
+"set timeout timeoutlen=1000 ttimeoutlen=100
+set noesckeys		" Means you can't use escape keys in insert mode (but I don't need them)
+
 " Doesn't default to plaintex
 let g:tex_flavor = "latex"
 " }}}
