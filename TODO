@@ -1,6 +1,6 @@
 # TODO make a better upgrade script
-# TODO .bashrc is not idempotent, specifically if you source .bashrc multiple times
-#      the PATH and PYTHONPATH variables will become bloated
+# TODO .bashrc is not idempotent, specifically if you source .bashrc multiple
+#      times the PATH and PYTHONPATH variables will become bloated
 # TODO figure out why .bashrc gets source twice on startup and fix it
 # TODO fix issues with javascript highlighting and indentation
 # TODO make javascript folding fold the docstring
