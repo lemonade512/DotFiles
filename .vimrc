@@ -27,9 +27,10 @@ Plugin 'majutsushi/tagbar'
 Plugin 'mhinz/vim-startify'
 
 " Syntax hilighting for less
-Plugin 'groenewege/vim-less'
-Plugin 'skammer/vim-css-color'
-Plugin 'hail2u/vim-css3-syntax'
+" TODO this stuff takes FOREVER to startup
+"Plugin 'groenewege/vim-less'
+"Plugin 'skammer/vim-css-color'
+"Plugin 'hail2u/vim-css3-syntax'
 
 " Session manager
 Plugin 'xolox/vim-session'
