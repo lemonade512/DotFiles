@@ -121,6 +121,16 @@ function upstr() {
 }
 # }}}
 
+function git_loglive() {
+    while :
+    do
+        clear
+        git --no-pager log --graph --pretty=oneline --abbrev-commit --decorate --all $*
+        sleep 1
+    done
+}
+
+
 function file_open() {
     # Opens a file using xdg-open
     echo "Opening $1 ..."
