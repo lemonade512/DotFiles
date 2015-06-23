@@ -1,5 +1,3 @@
-[include]
-	path = .gitconfig.khan
 [user]
 	name = Phillip Lemons
 	email = philliplemons512@gmail.com
