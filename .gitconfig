@@ -2,7 +2,7 @@
 	path = .gitconfig.khan
 [user]
 	name = Phillip Lemons
-	email = phillip@khanacademy.org
+	email = philliplemons512@gmail.com
 [credential]
 	helper = cache
 [core]
@@ -14,3 +14,5 @@
 	default = simple
 [diff]
 	tool = vimdiff
+[kaclone]
+	email = phillip@khanacademy.org
