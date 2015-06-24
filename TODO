@@ -5,5 +5,6 @@
 # TODO fix issues with javascript highlighting and indentation
 # TODO make javascript folding fold the docstring
 # TODO add a command to change vim to complete default so others can use
+# TODO Find out why liquidprompt is so slow in webapp repository (git related)
 
 # vim: set filetype=conf
