@@ -1,17 +1,29 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # Colors
 
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
 normal=$(tput sgr0)
 
 # Print functions
 
 print_padded() {
-	len=${#2}
-	printf "%-50s [$3%$((len+(10-len)/2))s%$(((10-len)/2))s$normal]\n" "$1" "$2"
+    # The goal of this function is to take in something to print as the first option,
+    # the status as teh second option, and the status color as the third option. The
+    # status will then be printed such that the distance between brackets [] will be a
+    # multiple of 10 and there will always be at least 1 space on either end of the
+    # status. There are probably better ways to make this look good for longer statuses
+    # but this works for what I want for now. TODO (phillip) I should write a better
+    # function for printing statuses to the command line.
+	local len=${#2}
+
+    # To round up use add (denom-1) to the numerator as described here
+    # http://stackoverflow.com/questions/2395284/round-a-divided-number-in-bash
+    local mult=$(((len + 9) / 10))
+	printf "%-100s [$3%$((len+((mult*10)-len)/2))s%$((((mult*10)-len)/2))s$normal]\n" "$1" "$2"
 }
 
 create_notice() {

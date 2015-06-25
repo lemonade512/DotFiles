@@ -1,4 +1,3 @@
-# TODO make a better upgrade script
 # TODO .bashrc is not idempotent, specifically if you source .bashrc multiple
 #      times the PATH and PYTHONPATH variables will become bloated
 # TODO figure out why .bashrc gets source twice on startup and fix it
@@ -6,5 +5,13 @@
 # TODO make javascript folding fold the docstring
 # TODO add a command to change vim to complete default so others can use
 # TODO Find out why liquidprompt is so slow in webapp repository (git related)
+#
+# Installation:
+#	TODO Write documentation for how to use install in the README
+#	TODO When installing, print relative path for link message
+#	TODO Either use a Makefile for everything or make it so you can run install,
+#		 or uninstall from anywhere.
+#	TODO Check to make sure everything is idempotent
+#	TODO Read file search paths from config file?
 
 # vim: set filetype=conf
