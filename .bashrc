@@ -146,9 +146,3 @@ export PATH=~/khan/devtools/arcanist/khan-bin:$PATH
 # Set up GO for google drive: https://github.com/odeke-em/drive
 export GOPATH=$HOME/gopath
 export PATH=$GOPATH:$GOPATH/bin:$PATH
-
-# Set up project paths
-export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/RPG"
-export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/Algorithms"
-export PYTHONPATH="${PYTHONPATH}:$HOME/Projects/CharacterKeeper"
-
