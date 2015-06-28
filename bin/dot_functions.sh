@@ -52,18 +52,10 @@ remove_notice() {
 
 # Other functions
 
-directory_warning() {
-	name=$(basename $0)
-	if [[ ! "$PWD/bin/$name" -ef "$0" ]]; then
-		echo "${yellow}Please run '$name' from root folder${normal}"
-		exit 1
-	fi
-}
-
 dirty_warning() {
-	if [ -n "$(git status --porcelain)" ]; then
+	if [ -n "$(git -C $__root status --porcelain)" ]; then
 		echo "${red}ERROR: You have a dirty working copy.${normal}"
-		echo "Commit or clean any changes, and run bin/upgrade again."
+		echo "Commit or clean any changes, and run $0 again."
 		exit 1
 	fi
 }

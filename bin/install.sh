@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 set -e
+shopt -s extglob
 
-source $(dirname $0)/dot_functions.sh
+__dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+__root=$(dirname $__dir)
+
+source $__dir/dot_functions.sh
 
 BACKUP_DIR="$HOME/backup"
 
@@ -28,7 +32,7 @@ function link_file() {
 }
 
 # Make sure we are in the proper directory
-directory_warning
+#directory_warning
 
 backup=true
 if [ $# -ne 0 ]; then
@@ -37,24 +41,22 @@ if [ $# -ne 0 ]; then
     fi
 fi
 
-for dotfile in $(./bin/file_list.sh); do
-    dotfiles_path="$PWD/$dotfile"
+for dotfile in $($__dir/file_list.sh); do
     path="$HOME/$(basename $dotfile)"
 
-    [ -e $dotfiles_path ] || continue
-    link_file $dotfiles_path $path $dotfile
+    [ -e $dotfile ] || continue
+    link_file $dotfile $path
 done
 
 
-for file in $(find custom -type f -not -name '*README*'); do
-    # in file substitute "custom" with the value of $HOME (like vim s/from/to/g)
-    path=${file/"custom"/$HOME}
+for file in $(find $__root/custom -type f -not -name '*README*'); do
+    path=${file/"DotFiles/custom/"/}
 
     if [ ! -L $path ]; then
         dest=$(dirname $path)
         link_notice "$file -> $path" "absent"
         mkdir -p $dest
-        ln -nfs $PWD/$file $dest
+        ln -nfs $file $path
     else
         skip_notice $path "exists"
     fi

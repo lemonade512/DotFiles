@@ -2,11 +2,13 @@
 
 set -e
 
-source $(dirname $0)/dot_functions.sh
+__dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+__root=$(dirname $__dir)
 
-directory_warning
+source $__dir/dot_functions.sh
+
 dirty_warning
 
-git pull --rebase
-./bin/uninstall.sh
-./bin/install.sh
+git -C $__root pull --rebase
+$__dir/uninstall.sh
+$__dir/install.sh

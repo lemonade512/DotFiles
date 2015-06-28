@@ -2,19 +2,26 @@
 
 set -e
 
-source $(dirname $0)/dot_functions.sh
+__dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+__root=$(dirname $__dir)
 
-directory_warning
+source $__dir/dot_functions.sh
 
-for dotfile in $(./bin/file_list.sh); do
-    dotfiles_path="$PWD/$dotfile"
+for dotfile in $($__dir/file_list.sh); do
     path="$HOME/$(basename $dotfile)"
 
+    if [ ! "$dotfile" = "$(readlink -f $dotfile)" ]; then
+        dotfile=$__root/$dotfile
+    fi
+
     if [ -L $path ]; then # Symlink?
-        if [ $dotfiles_path = "$(readlink $path)" ]; then #SymLinked Here?
+        if [ $dotfile = "$(readlink $path)" ]; then #SymLinked Here?
             remove_notice $path "exists"
             unlink $path
         else
+            echo "dotfile="$dotfile
+            echo "path=$path"
+            echo "readlink path="$(readlink $path)
             skip_notice $path "external"
         fi
     else
@@ -22,15 +29,15 @@ for dotfile in $(./bin/file_list.sh); do
     fi
 done
 
-for file in $(find custom -type f -not -name '*README*'); do
-    path=${file/"custom"/$HOME}
+for file in $(find $__root/custom -type f -not -name '*README*'); do
+    path=${file/"DotFiles/custom/"/}
 
     if [ -L $path ]; then
-        if [ $PWD/$file = $(readlink $path) ]; then
+        if [ $file = $(readlink $path) ]; then
             remove_notice $path "exists"
             unlink $path
         else
-            skip_notice "external"
+            skip_notice $path "external"
         fi
     else
         skip_notice $path "unlinked"
