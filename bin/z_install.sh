@@ -2,11 +2,20 @@
 
 set -e
 
-source $(dirname $0)/dot_functions.sh
+__dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+__root=$(dirname $__dir)
 
-directory_warning
+source $__dir/dot_functions.sh
 
-#TODO check for sudo access
-copy_notice "z/z.1" "absent"
-sudo cp z/z.1 /usr/local/man/man1/
-mandb
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root"
+    exit
+fi
+
+if [ ! -e "/usr/local/man/man1" ]; then
+    copy_notice "z/z.1 -> /usr/local/man/man1" "absent"
+    sudo cp z/z.1 /usr/local/man/man1/
+    mandb
+else
+    skip_notice "/usr/local/man/man1" "exists"
+fi
