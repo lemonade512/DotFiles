@@ -2,9 +2,6 @@
 " https://sites.google.com/a/khanacademy.org/forge/for-developers/styleguide/python
 setlocal expandtab ts=4 sw=4 sts=4
 
-" PEP-8 wants this (as does Khan linters)
-setlocal textwidth=79
-
 " Enable syntax checkers for python
 let g:syntastic_python_checkers = ['pylint', 'pyflakes']
 
