@@ -4,7 +4,14 @@
 # TODO fix issues with javascript highlighting and indentation
 # TODO make javascript folding fold the docstring
 # TODO add a command to change vim to complete default so others can use
-# TODO Find out why liquidprompt is so slow in webapp repository (git related)
+# TODO Make vim command that can open files in fast mode without slow
+#	   things like syntax checkers, YCM, loading views, etc. Test this
+#	   on webapp/bigbingo/config.py
+# TODO change less and css indent to 2 spaces
+#
+# TODO I should have an alias that gives me a list of all my other aliases
+#	   and how I can use them. That way I can create scripts and then have
+#	   an easy way to remember them.
 #
 # Installation:
 #	TODO Write documentation for how to use install in the README

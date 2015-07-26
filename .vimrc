@@ -197,8 +197,9 @@ set foldenable			" enable folding
 set foldlevelstart=10	" open most folds by default
 set foldnestmax=10		" 10 nested fold max
 set foldmethod=indent
+
 autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+autocmd BufWinEnter *.* if (expand("<afile>")) != "config.py" | silent loadview | endif
 " TODO set a folding method for different filetypes using autocmds
 " }}}
 
