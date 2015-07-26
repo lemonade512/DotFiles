@@ -46,4 +46,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 alias solarize='~/.solarized/solarize.sh'
 
+alias kalinc='khan_lint'
+
 # vim:foldmethod=marker:foldlevel=0

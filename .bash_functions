@@ -121,6 +121,10 @@ function upstr() {
 }
 # }}}
 
+function khan_lint() {
+	LINTDIR=~/khan/devtools/khan-linter; git diff -z --name-only --diff-filter=ACMRTUB '@{u}' | xargs -0 $LINTDIR/runlint.py --blacklist=yes
+}
+
 function git_loglive() {
     while :
     do
