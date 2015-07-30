@@ -13,6 +13,8 @@
 #	   and how I can use them. That way I can create scripts and then have
 #	   an easy way to remember them.
 #
+# TODO See highlighting-errors.py to see an error with the colorscheme
+#
 # Installation:
 #	TODO Write documentation for how to use install in the README
 #	TODO When installing, print relative path for link message
