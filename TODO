@@ -12,6 +12,10 @@
 # TODO I should have an alias that gives me a list of all my other aliases
 #	   and how I can use them. That way I can create scripts and then have
 #	   an easy way to remember them.
+# TODO Setup new filetype for jsx
+#
+# TODO make a vim command that fixes comments to only be 80 characters
+# long and makes sure breaks are put in the proper spots
 #
 # TODO See highlighting-errors.py to see an error with the colorscheme
 #
