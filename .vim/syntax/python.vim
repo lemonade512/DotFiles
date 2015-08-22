@@ -105,8 +105,9 @@ syn match   pythonFunction
       \ "\%(\%(def\s\|class\s\|@\)\s*\)\@<=\h\%(\w\|\.\)*" contained nextgroup=pythonVars
 syn region pythonVars start="(" end=")" contained contains=pythonParameters transparent keepend
 syn match pythonParameters "[^,]*" contained contains=pythonParam,pythonBrackets skipwhite
-syn match pythonParam "=[^,]*" contained contains=pythonExtraOperator,pythonBuiltin,pythonConstant,pythonStatement,pythonNumber,pythonString skipwhite
+syn match pythonParam "=[^,]*" contained contains=pythonExtraOperator,pythonBuiltin,pythonConstant,pythonStatement,pythonNumber,pythonString,pythonList skipwhite
 syn match pythonBrackets "[(|)]" contained skipwhite
+syn match pythonList "\[.*\]" contained contains=pythonExtraOperator,pythonBuiltin,pythonConstant,pythonStatement,pythonNumber,pythonString
 
 " NOTE: @pfdevilliers added this
 " The same as the previous definitions but for the python class.
