@@ -24,3 +24,8 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+
+# Set PATH to include global npm modules
+if [ -d "$HOME/.npm-global/bin" ]; then
+    PATH="$HOME/.npm-global/bin:$PATH"
+fi
