@@ -140,7 +140,9 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 # }}}
 
-export PATH=$PATH:~/bin
+# Make sure .bashrc is idempotent
+[[ -z "$PATH_ORIGINAL" ]] && export PATH_ORIGINAL=$PATH
+export PATH=$PATH_ORIGINAL:~/bin
 export PATH=~/khan/devtools/arcanist/khan-bin:$PATH
 
 # Set up GO for google drive: https://github.com/odeke-em/drive
