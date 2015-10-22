@@ -20,9 +20,16 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 alias pylint="pylint --rcfile ~/.pylintrc"
 
-alias ls="ls --color=auto"
-alias ll="ls -alF"
+# Add colors for filetype and human-readable sizes
+alias ls="ls --color=auto -h"
 alias la="ls -A"
+alias lx="ls -lXB" # Sort by extension
+alias lk="ls -lSr" # Sort by size, biggest last
+alias lt="ls -ltr" # Sort by date, most recent last
+alias lc="ls -ltcr" # Sort by/show change time, most recent last
+alias lu="ls -ltur" # Sort by/show access time, most recent last
+
+alias ll="ls -alF"
 
 # }}}
 
