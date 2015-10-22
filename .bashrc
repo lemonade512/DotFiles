@@ -53,19 +53,16 @@ fi
 
 # Reset PROMPT COMMAND so sourcing this file is idempotent
 PROMPT_COMMAND=""
+PS1="\n${HC}[ ${RS}${FRED}\u@\h ${RS}${HC}] ${HC}${FGRN}\w${RS}\n${HC}${FRED}\$${RS} "
 if [ -f  ~/liquidprompt ]; then
-    PS1="\n${HC}[ ${RS}${FRED}\u@\h ${RS}${HC}] ${HC}${FGRN}\w${RS}\n${HC}${FRED}\$${RS} "
     source ~/liquidprompt
-else
-    PS1="\n${HC}[ ${RS}${FRED}\u@\h ${RS}${HC}] ${HC}${FGRN}\w${RS}\n${HC}${FRED}\$${RS} "
-    #PS1='\n\[\033[01m\][ \[\033[00;34m\]\u@\h \[\033[00m\]\[\033[01m\]] \[\033[01;32m\]\w\[\033[00m\]\n\[\033[01;34m\]$\[\033[00m\]'
 fi
 
 if [ -e "$HOME/DotFiles/z/z.sh" ]; then
     . "$HOME/DotFiles/z/z.sh"
 fi
 # Make terminal title reflect current directory
-PROMPT_COMMAND=$PROMPT_COMMAND'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+#PROMPT_COMMAND=$PROMPT_COMMAND'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
 # }}}
 
