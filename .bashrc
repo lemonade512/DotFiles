@@ -141,7 +141,4 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 [[ -z "$PATH_ORIGINAL" ]] && export PATH_ORIGINAL=$PATH
 export PATH=$PATH_ORIGINAL:~/bin
 export PATH=~/khan/devtools/arcanist/khan-bin:$PATH
-
-# Set up GO for google drive: https://github.com/odeke-em/drive
-export GOPATH=$HOME/gopath
-export PATH=$GOPATH:$GOPATH/bin:$PATH
+export Path=$PATH:$HOME/google_appengine/
