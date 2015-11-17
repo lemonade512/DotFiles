@@ -3,6 +3,12 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Make sure .bashrc is idempotent
+[[ -z "$PATH_ORIGINAL" ]] && export PATH_ORIGINAL=$PATH
+export PATH=$PATH_ORIGINAL:~/bin
+export PATH=~/khan/devtools/arcanist/khan-bin:$PATH
+export Path=$PATH:$HOME/google_appengine/
+
 # ANSI color codes {{{
 RS=$'\[\033[00m\]'    # reset
 HC=$'\[\033[01m\]'    # hicolor
@@ -136,9 +142,3 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 # }}}
-
-# Make sure .bashrc is idempotent
-[[ -z "$PATH_ORIGINAL" ]] && export PATH_ORIGINAL=$PATH
-export PATH=$PATH_ORIGINAL:~/bin
-export PATH=~/khan/devtools/arcanist/khan-bin:$PATH
-export Path=$PATH:$HOME/google_appengine/
