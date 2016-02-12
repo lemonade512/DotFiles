@@ -23,6 +23,8 @@ Plugin 'yueyoum/vim-linemovement'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'majutsushi/tagbar'
 
+Plugin 'Glench/Vim-Jinja2-Syntax'
+
 " Better starting screen
 Plugin 'mhinz/vim-startify'
 
@@ -111,6 +113,10 @@ set rtp+=~/.vim/after/hack.vim
 			\ '',
 			\ '']
 "	}}}
+"   Auto Format {{{
+		let g:formatdef_yapf = '"python yapf"'
+		let g:formatters_python = ['yapf']
+"   }}}
 " }}}
 
 " General {{{
