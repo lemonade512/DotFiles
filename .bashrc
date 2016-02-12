@@ -7,7 +7,8 @@
 [[ -z "$PATH_ORIGINAL" ]] && export PATH_ORIGINAL=$PATH
 export PATH=$PATH_ORIGINAL:~/bin
 export PATH=~/khan/devtools/arcanist/khan-bin:$PATH
-export Path=$PATH:$HOME/google_appengine/
+export PATH=$PATH:$HOME/google_appengine/
+export PATH=$PATH:$HOME/.local/bin
 
 # ANSI color codes {{{
 RS=$'\[\033[00m\]'    # reset
