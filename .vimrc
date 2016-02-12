@@ -396,6 +396,14 @@ vnoremap <silent><leader>r :call VisualSelection('replace')<CR>
 nnoremap <leader>ms :SaveSession<CR>
 " }}}
 
+" Allow xterm keys in tmux
+if &term =~ '^screen'
+	execute "set <xUp>=\e[1;*A"
+	execute "set <xDown>=\e[1;*B"
+	execute "set <xRight>=\e[1;*C"
+	execute "set <xLeft>=\e[1;*D"
+endif
+
 " Last 5 lines are modelines
 set modelines=5
 " vim:foldmethod=marker:foldlevel=0
