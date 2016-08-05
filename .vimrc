@@ -16,7 +16,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 "Plugin 'kevinw/pyflakes-vim'
-Plugin 'Raimondi/delimitMate'
+"Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-surround'
 Plugin 'bling/vim-airline'
 Plugin 'yueyoum/vim-linemovement'
@@ -34,12 +34,12 @@ Plugin 'mhinz/vim-startify'
 "Plugin 'skammer/vim-css-color'
 "Plugin 'hail2u/vim-css3-syntax'
 
-" Session manager
-Plugin 'xolox/vim-session'
-
-" Vim notes
-Plugin 'xolox/vim-notes'
-Plugin 'xolox/vim-misc'
+"" Session manager
+"Plugin 'xolox/vim-session'
+"
+"" Vim notes
+"Plugin 'xolox/vim-notes'
+"Plugin 'xolox/vim-misc'
 
 " Used for javascript stuff
 Plugin 'marijnh/tern_for_vim'
@@ -117,6 +117,9 @@ set rtp+=~/.vim/after/hack.vim
 		let g:formatdef_yapf = '"python yapf"'
 		let g:formatters_python = ['yapf']
 "   }}}
+"	Ctrl-P {{{
+		let g:ctrlp_custom_ignore = 'node_modules'
+"	}}}
 " }}}
 
 " General {{{
