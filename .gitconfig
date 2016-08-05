@@ -1,6 +1,3 @@
-[include]
-    path = .gitconfig.khan
-
 [core]
     editor = vim
     autocrlf = input
@@ -29,12 +26,6 @@
     # When merging use our version of the given files and forget about theirs
     ours = "!f() { git checkout --ours $@ && git add $@; }; f"
 
-    # Versions of commands that handle submodules properly.
-    co = "!f() { git checkout \"$@\" && git submodule update --init --recursive; }; f"
-    p = "!f() { git pull \"$@\" && git submodule update --init --recursive; }; f"
-    m = "!f() { git merge \"$@\" && git submodule update --init --recursive; }; f"
-    gsu = "!f() { git submodule sync --recursive && git submodule update --init --recursive; }; f"
-
     # Other useful commands.
     outgoing = "!git fetch >/dev/null 2>&1; git log @{upstream}..HEAD"
     incoming = "!git fetch >/dev/null 2>&1; git log HEAD..@{upstream}"
@@ -44,6 +35,9 @@
 	weekly = "!git log --author=$USER --since=`date -d last\\ monday +%Y/%m/%d`"
 
 	# Abbreviations
+    co = checkout
+    p = pull
+    m = merge
 	st = status
 	ci = commit
 
