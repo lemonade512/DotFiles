@@ -5,9 +5,8 @@
 
 # Make sure .bashrc is idempotent
 [[ -z "$PATH_ORIGINAL" ]] && export PATH_ORIGINAL=$PATH
-export PATH=$PATH_ORIGINAL:~/bin
-export PATH=~/khan/devtools/arcanist/khan-bin:$PATH
-export PATH=$PATH:$HOME/google_appengine/
+export PATH=$PATH_ORIGINAL:$HOME/bin
+export PATH=$PATH:$HOME/libraries/google_appengine/
 export PATH=$PATH:$HOME/.local/bin
 
 # ANSI color codes {{{
@@ -143,3 +142,13 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 # }}}
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f /home/phillip/libraries/google-cloud-sdk/path.bash.inc ]; then
+  source '/home/phillip/libraries/google-cloud-sdk/path.bash.inc'
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f /home/phillip/libraries/google-cloud-sdk/completion.bash.inc ]; then
+  source '/home/phillip/libraries/google-cloud-sdk/completion.bash.inc'
+fi
