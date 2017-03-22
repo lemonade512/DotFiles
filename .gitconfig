@@ -1,5 +1,5 @@
 [core]
-    editor = vim
+    editor = /Applications/MacVim.app/Contents/MacOS/Vim
     autocrlf = input
 
 [user]
