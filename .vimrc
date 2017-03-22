@@ -163,23 +163,23 @@ set listchars=tab:>.,trail:.,extends:#,nbsp:.,eol:& " set the listchars to be us
 " }}}
 
 " UI Config {{{
-set wrap			" Lines wrap
-set linebreak		" only wrap at a character in breakat
-set nolist			" list diables linebreak
-set textwidth=0		" Don't insert linebreaks for wrap
-set wrapmargin=0	" Don't insert linebreaks for wrap
-set mouse=a			" Can use mouse for most actions
-set pastetoggle=<F2> " Allow toggling paste mode with F2
+set autoread		" automatically updates file that has been changed outside of buffer
+set backspace=2 	" can backspace through anything
 set hidden			" Buffers become hidden when abandoned
 set laststatus=2	" Always show status bar
-set showcmd 		" shows command in bottom right
-set wildmenu		" visual autocomplete for command menu
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.o " ignore some files in wild menu
 set lazyredraw		" only redraws when it needs to
-set showmatch		" highlight matching [{()}]
-set backspace=2 	" can backspace through anything
-set autoread		" automatically updates file that has been changed outside of buffer
+set linebreak		" only wrap at a character in breakat
+set mouse=a			" Can use mouse for most actions
+set nolist			" list diables linebreak
+set pastetoggle=<F2> " Allow toggling paste mode with F2
 set scrolloff=2		" Always shows at least 2 lines of context when scrolling
+set showcmd 		" shows command in bottom right
+set showmatch		" highlight matching [{()}]
+set textwidth=0		" Don't insert linebreaks for wrap
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o " ignore some files in wild menu
+set wildmenu		" visual autocomplete for command menu
+set wrap			" Lines wrap
+set wrapmargin=0	" Don't insert linebreaks for wrap
 
 " Disable backup and swap files
 set nobackup
