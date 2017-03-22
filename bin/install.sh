@@ -50,7 +50,7 @@ done
 
 
 for file in $(find $__root/custom -type f -not -name '*README*'); do
-    path=${file/"DotFiles/custom/"/}
+    path=$(echo $file | sed -e 's/DotFiles\/custom\///')
 
     if [ ! -L $path ]; then
         dest=$(dirname $path)
