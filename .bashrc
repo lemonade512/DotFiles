@@ -79,7 +79,7 @@ if [ -s ~/.bashrc.khan ]; then
 fi
 
 if [ -f ~/.bash_aliases ]; then
-	. ~/.bash_aliases
+    . ~/.bash_aliases
 fi
 
 if [ -f ~/.bash_functions ]; then
@@ -113,7 +113,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-shopt -s globstar
+#shopt -s globstar
 
 # correct minor errors in 'cd' commands
 shopt -s cdspell
@@ -121,7 +121,11 @@ shopt -s cdspell
 # Bash command editing works like vi
 set -o vi
 
-export EDITOR=/usr/bin/vim
+if [ "$(uname -s)" != "Darwin" ]; then
+    export EDITOR="/usr/bin/vim"
+else
+    export EDITOR="/Applications/MacVim.app/Contents/MacOS/Vim"
+fi
 if [[ $TERM == xterm ]]; then
     TERM=xterm-256color
 fi

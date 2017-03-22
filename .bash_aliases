@@ -5,10 +5,17 @@ alias grep="grep --color=auto"
 alias fgrep="grep -F"
 alias egrep="grep -E"
 
+# Use macvim on mac
+if [ "$(uname -s)" = "Darwin" ]; then
+    alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+fi
+
 # Prompt if overrite
 alias mv="mv -i"
 alias cp="cp -i"
-alias rm="rm -I"
+if [ "$(uname -s)" != "Darwin" ]; then
+    alias rm="rm -I"
+fi
 
 alias grepn="grep -s -I -n --color=auto"
 
@@ -21,7 +28,11 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias pylint="pylint --rcfile ~/.pylintrc"
 
 # Add colors for filetype and human-readable sizes
-alias ls="ls --color=auto -h"
+if [ "$(uname -s)" == "Darwin" ]; then
+    alias ls="ls -G"
+else
+    alias ls="ls --color=auto -h"
+fi
 alias la="ls -A"
 alias lx="ls -lXB" # Sort by extension
 alias lk="ls -lSr" # Sort by size, biggest last
