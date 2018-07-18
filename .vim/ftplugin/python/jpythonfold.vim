@@ -36,7 +36,7 @@
 " I you disagree, use instead of the pattern '^\s*\(class\s.*:\|def\s\)'
 " to enforce : for defs:                     '^\s*\(class\|def\)\s.*:'
 " you'll have to do this in two places.
-let s:defpat = '^\s*\(@\|class\s.*:\|def\s\)'
+let s:defpat = '^\s*\(@\|class\s.*:\|def\s\|async\s\)'
 
 " (**) Ignore non-python files
 " Commented out because some python files are not recognized by Vim
