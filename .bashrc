@@ -8,6 +8,13 @@
 export PATH=$PATH_ORIGINAL:$HOME/bin
 export PATH=$PATH:$HOME/libraries/google_appengine/
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:/opt/mssql-tools/bin
+export PATH=$PATH:$HOME/arcanist/bin
+export PATH="$HOME/.pyenv/bin:$PATH"
+
+# Initialize pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # ANSI color codes {{{
 RS=$'\[\033[00m\]'    # reset
@@ -86,10 +93,14 @@ if [ -f ~/.bash_functions ]; then
 	. ~/.bash_functions
 fi
 
-# enable color support of ls
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-fi
+## enable color support of ls
+#if [ -x /usr/bin/dircolors ]; then
+#    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+#fi
+
+# better LS colors
+export LS_COLORS="di=1;34:ln=35:so=31:pi=33:ex=32:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+
 
 # }}}
 
@@ -156,3 +167,4 @@ fi
 if [ -f /home/phillip/libraries/google-cloud-sdk/completion.bash.inc ]; then
   source '/home/phillip/libraries/google-cloud-sdk/completion.bash.inc'
 fi
+

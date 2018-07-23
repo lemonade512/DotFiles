@@ -10,6 +10,11 @@ if [ "$(uname -s)" = "Darwin" ]; then
     alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 fi
 
+# Use nvim if it is available
+if hash nvim 2>/dev/null; then
+    alias vim="nvim"
+fi
+
 # Prompt if overrite
 alias mv="mv -i"
 alias cp="cp -i"
@@ -57,6 +62,12 @@ alias kaenv="source ~/.virtualenv/khan27/bin/activate"
 alias install="sudo apt-get install"
 alias remove="sudo apt-get remove"
 # }}}
+
+# Package Management {{{
+alias gconfig="gcloud config"
+alias gconfigurations="gcloud config configurations"
+# }}}
+
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

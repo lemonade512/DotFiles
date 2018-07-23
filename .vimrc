@@ -22,6 +22,8 @@ Plugin 'bling/vim-airline'
 Plugin 'yueyoum/vim-linemovement'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'majutsushi/tagbar'
+Plugin 'tfnico/vim-gradle'
+Plugin 'prettier/vim-prettier'
 
 Plugin 'Glench/Vim-Jinja2-Syntax'
 
@@ -45,10 +47,12 @@ Plugin 'mhinz/vim-startify'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
 
 " Used for HTML/CSS
 Plugin 'mattn/emmet-vim'
+
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -84,7 +88,7 @@ set rtp+=~/.vim/after/hack.vim
 		"let g:ycm_auto_trigger = 0
 "	}}}
 "   Syntastic {{{
-        let g:syntastic_mode_map={'mode':'active','active_filetypes':[],'passive_filetypes':[]}
+        let g:syntastic_mode_map={'mode':'passive','active_filetypes':[],'passive_filetypes':[]}
 "   }}}
 "   Airline (better status bar) {{{
 		let g:airline#extensions#tabline#enabled=1
@@ -120,6 +124,9 @@ set rtp+=~/.vim/after/hack.vim
 "	Ctrl-P {{{
 		let g:ctrlp_custom_ignore = 'node_modules'
 "	}}}
+"   JSX {{{
+		let g:jsx_ext_required = 0
+"   }}}
 " }}}
 
 " General {{{
@@ -139,9 +146,9 @@ let g:tex_flavor = "latex"
 " Colors {{{
 syntax enable
 set t_Co=256
-"colorscheme wombat256mod " set default colorscheme
-colorscheme baycomb " set default colorscheme
-set background=dark " set background to dark
+"colorscheme baycomb " set default colorscheme
+"set background=dark " set background to dark
+colorscheme zenburn
 
 if &term =~ '256color'
   " disable Background Color Erase (BCE) so that color schemes
@@ -153,6 +160,7 @@ endif
 
 " Spaces and Tabs {{{
 filetype indent on	" load filetype-specific indent files
+set expandtab		" Expand tabs to spaces by default
 set shiftwidth=4	" Number of spaces for auto indenting also effects reindent operations (<< and >>)
 set tabstop=4		" A tab is 4 spaces"
 set softtabstop=4	" number of spaces in tab when editing
@@ -415,4 +423,5 @@ endif
 
 " Last 5 lines are modelines
 set modelines=5
+
 " vim:foldmethod=marker:foldlevel=0

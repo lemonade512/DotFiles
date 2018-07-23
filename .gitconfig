@@ -1,5 +1,5 @@
 [core]
-    editor = /Applications/MacVim.app/Contents/MacOS/Vim
+	editor = vim
     autocrlf = input
 
 [user]
@@ -40,6 +40,7 @@
     m = merge
 	st = status
 	ci = commit
+	quick-stats = ! /usr/local/bin/git-quick-stats
 
 [push]
     default = simple

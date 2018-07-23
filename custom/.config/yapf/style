@@ -1,0 +1,6 @@
+[style]
+dedent_closing_brackets = True
+blank_line_before_nested_class_or_def = True
+align_closing_bracket_with_visual_indent = True
+indent_dictionary_value = True
+column_limit=80

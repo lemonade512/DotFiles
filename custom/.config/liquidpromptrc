@@ -11,6 +11,8 @@ if [ -f ~/.config/liquidprompt/phillip.theme ]; then
     source ~/.config/liquidprompt/phillip.theme
 fi
 
+LP_COLOR_TELNET=$BLUE
+
 #############
 # BEHAVIOUR #
 #############

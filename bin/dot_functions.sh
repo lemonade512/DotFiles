@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 
-# Colors
+__dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-yellow=$(tput setaf 3)
-blue=$(tput setaf 4)
-normal=$(tput sgr0)
+source $__dir/colors.sh
 
 # Print functions
 
@@ -27,27 +23,27 @@ print_padded() {
 }
 
 create_notice() {
-	print_padded "Creating $1" "$2" $green
+    echo "Creating $1 (${green}$2${normal})"
 }
 
 skip_notice() {
-	print_padded "${yellow}Skipping${normal} $1" "$2" $yellow
+    echo "${yellow}Skipping${normal} $1 (${yellow}$2${normal})"
 }
 
 backup_notice() {
-	print_padded "${yellow}Backing Up${normal} $1" "$2" $yellow
+    echo "${yellow}Backing Up${normal} $1 (${yellow}$2${normal})"
 }
 
 copy_notice() {
-	print_padded "${green}Copying${normal}  $1" "$2" $green
+    echo "{green}Copying${normal} $1 (${green}$2${normal})"
 }
 
 link_notice() {
-	print_padded "${green}Linking${normal}  $1" "$2" $green
+    echo "${green}Linking${normal} $1 (${green}$2${normal})"
 }
 
 remove_notice() {
-	print_padded "${red}Removing${normal} $1" "$2" $red
+    echo "${red}Removing${normal} $1 (${red}$2${normal})"
 }
 
 # Other functions

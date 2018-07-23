@@ -1,0 +1,237 @@
+" Vim-plug initialization {{{
+" ============================================================================
+" Avoid modifying this section, unless you are very sure of what you are doing
+
+let vim_plug_just_installed = 0
+let vim_plug_path = expand('~/.config/nvim/autoload/plug.vim')
+if !filereadable(vim_plug_path)
+    echo "Installing Vim-plug..."
+    echo ""
+    silent !mkdir -p ~/.config/nvim/autoload
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    let vim_plug_just_installed = 1
+endif
+
+" manually load vim-plug the first time
+if vim_plug_just_installed
+    :execute 'source '.fnameescape(vim_plug_path)
+endif
+
+" Obscure hacks done, you can now modify the rest of the .vimrc as you wish :)
+" ============================================================================
+" }}}
+
+" Python extensions {{{
+let g:python_host_prog = '/home/plemons/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/home/plemons/.pyenv/versions/neovim3/bin/python'
+" }}}
+
+" Package Management {{{
+call plug#begin('~/.config/nvim/bundle')
+
+" ===================
+" Custom plugins
+" ===================
+
+Plug 'kien/ctrlp.vim'      " Fuzzy file searching
+Plug 'tpope/vim-fugitive'  " Git for Vim
+Plug 'bling/vim-airline'   " Better status bar
+Plug 'vim-python/python-syntax'  " Syntax highlighting for Vim
+Plug 'morhetz/gruvbox'     " Colorscheme
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-jedi'      " Neovim completion manager for Python
+Plug 'roxma/nvim-yarp'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'mindriot101/vim-yapf' " Better auto-formatting for Python
+Plug 'airblade/vim-gitgutter'  " Git gutter for vim
+
+" ===================
+" End custom plugins
+" ===================
+
+call plug#end()            " required
+" }}}
+
+" Package Configuration {{{
+"   Airline (better status bar) {{{
+		let g:airline#extensions#tabline#enabled=1
+		let g:airline_powerline_fonts = 1
+"   }}}
+"   Gruvbox {{{
+        let g:gruvbox_contrast_dark = 'soft'
+"   }}}
+"   Language Client {{{
+        let g:LanguageClient_serverCommands = {
+            \ 'python': ['pyls']
+            \ }
+"   }}}
+"   Neovim Completion Manager {{{
+        autocmd BufEnter *.py call ncm2#enable_for_buffer()
+        set completeopt=noinsert,menuone,noselect
+        " When the <Enter> key is pressed while the popup menu is visible, it only
+        " hides the menu. Use this mapping to close the menu and also start a new
+        " line.
+        inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+        " Use <TAB> to select the popup menu:
+        inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+        inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"   }}}
+" }}}
+
+" General {{{
+let mapleader=","	" Changes leader key from \ to ,
+set autochdir		" Automatically sets the cwd to the file being edited
+let g:tex_flavor = "latex"
+" }}}
+
+" Colors {{{
+
+" Use gruvbox if possible, and fall back to zenburn
+silent! colorscheme zenburn
+silent! colorscheme gruvbox
+set background=dark
+
+" }}}
+
+" Spaces and Tabs {{{
+set expandtab		" Expand tabs to spaces by default
+set shiftwidth=4	" Number of spaces for auto indenting
+set tabstop=4		" A tab is 4 spaces"
+set softtabstop=4	" Number of spaces in tab when editing
+set listchars=tab:>.,trail:.,extends:#,nbsp:.,eol:& " Set the listchars to be used for set list
+" }}}
+
+" UI Config {{{
+set hidden			" Buffers become hidden when abandoned
+set lazyredraw		" Only redraws when it needs to
+set linebreak       " Don't break in the middle of a word
+set mouse=a			" Can use mouse for most actions
+set pastetoggle=<F2> " Allow toggling paste mode with F2
+set scrolloff=2		" Always shows at least 2 lines of context when scrolling
+set showmatch		" Highlight matching [{()}]
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o " ignore some files in wild menu
+set foldlevelstart=10	" open most folds by default
+set foldnestmax=10		" 10 nested fold max
+set foldmethod=indent
+set foldignore=''   " Make sure to fold bash comments
+
+" Disable backup and swap files
+set nobackup
+set nowritebackup
+set noswapfile
+
+" Searching
+set ignorecase
+set smartcase
+" }}}
+
+" Autogroups {{{
+
+" Make sure folding stays consistent across sessions
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* if (expand("<afile>")) != "config.py" | silent! loadview | endif
+
+augroup allgroup
+	autocmd!
+	autocmd BufWritePre * :call DeleteTrailingWS()
+    if exists(":AirlineRefresh")
+        autocmd BufEnter * AirlineRefresh
+    endif
+	autocmd BufEnter * :lchdir %:p:h
+
+	" Return to last edit position when opening files
+	autocmd BufReadPost *
+		\ if line("'\"") > 0 && line("'\"") <= line("$") |
+		\	exe "normal! g`\"" |
+		\ endif
+augroup END
+
+augroup configgroup
+	autocmd!
+	autocmd BufWritePost ~/.config/nvim/init.vim source %   " Automatically reload config when saved
+    autocmd BufWritePost ~/.config/nvim/init.vim set foldmethod=marker
+augroup END
+" }}}
+
+" Custom Functions {{{
+
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+
+" }}}
+
+" Key Mappings {{{
+
+" Toggle Tagbar
+nmap T :TagbarToggle<CR>
+
+" Allow easy window switching
+nmap <silent> <S-Up> :wincmd k<CR>
+nmap <silent> <S-Down> :wincmd j<CR>
+nmap <silent> <S-Left> :wincmd h<CR>
+nmap <silent> <S-Right> :wincmd l<CR>
+
+" Allow using ctl + arrow up or down to move between folds
+nmap <C-Up> zk
+nmap <C-Down> zj
+
+" Move vertically by visual line not real line
+nnoremap j gj
+nnoremap k gk
+nnoremap <End> g<End>
+nnoremap <Home> g<Home>
+imap <End> <C-o>g<End>
+imap <Home> <C-o>g<Home>
+
+" maps space to open and close folds
+nnoremap <space> za
+
+" easier moving of code blocks
+vnoremap < <gv
+vnoremap > >gv
+
+" Use language client hover instead of default vim lookup
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+
+" }}}
+
+" Leader Key Mappings {{{
+
+" Turn off seach highlight with ,<space>
+nnoremap <leader><space> :nohlsearch<CR>
+
+" change buffers with ,k and ,j
+nnoremap <leader>j :bp<CR>
+nnoremap <leader>k :bn<CR>
+
+" Close the current buffer
+noremap <leader>bd :bp<bar>sp<bar>bn<bar>bd<CR>
+
+" Quick save and quit commands
+nnoremap <leader>w :write<CR>
+nnoremap <leader>q :quit<CR>
+
+" Close the preview window
+nnoremap <leader>c :pclose<CR>
+
+" Language Client Mappings
+nnoremap <leader>r :call LanguageClient#textDocument_rename()<CR>
+nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
+
+" TODO (plemons): Make sure this is only mapped for Python files. Otherwise,
+" map the LanguageClient binding
+nnoremap <leader>f :Yapf<CR>
+
+" Toggle git gutter
+nnoremap <leader>g :GitGutterToggle<CR>
+
+" }}}
+
+" vim:foldmethod=marker
