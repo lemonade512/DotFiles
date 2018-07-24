@@ -64,13 +64,19 @@ function create_symlinks() {
         ln -s "$file" "$target"
         ok
     done
+
+    # TODO (plemons): Make sure we backup liquidprompt if it exists
+    action "Installing liquidprompt"
+    running "Linking $__root/liquidprompt/liquidprompt"
+    ln -s "$__root/liquidprompt/liquidprompt" "$HOME/liquidprompt" > /dev/null 2>&1
+    ok
 }
 
 function setup_neovim() {
     running "Installing nvim plugins..."
     nvim +PlugInstall +qall > /dev/null 2>&1
     ok
-    require_pyenv 2.7.11 neovim2
+    require_pyenv 2.7.15 neovim2
     require_pyenv 3.6.6 neovim3
 
     require_pip 'python_language_server'

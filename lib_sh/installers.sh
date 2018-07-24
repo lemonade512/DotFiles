@@ -6,17 +6,17 @@
 
 source $__root/lib_sh/echos.sh
 
+NVM_URL="https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh"
+
 function source_nvm() {
-    export NVM_DIR=~/.nvm
+    export NVM_DIR="$HOME/.nvm"
     source $NVM_DIR/nvm.sh
 }
 
 function install_nvm() {
-    source_nvm
     running "installing nvm from Github"
-    nvm --version > /dev/null 2>&1
-    if [[ $? != 0 ]]; then
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+    if [[ ! -d "$HOME/.nvm" ]]; then
+        curl -o- "$NVM_URL" 2>/dev/null | bash > /dev/null 2>&1
         source_nvm
         nvm --version > /dev/null 2>&1
         if [[ $? != 0 ]]; then
@@ -46,9 +46,9 @@ function require_npm() {
     source_nvm
     nvm use stable
     running "npm install -g $1"
-    npm list -g --depth 0 | grep "$1" > /dev/null
+    npm list -g --depth 0 | grep "$1" > /dev/null 2>&1
     if [[ $? != 0 ]]; then
-        npm install -g "$1"
+        npm install -g "$1" > /dev/null 2>&1
         if [[ $? != 0 ]]; then
             error
             return
@@ -61,11 +61,21 @@ function require_apt() {
     running "apt-get install $1"
     dpkg -l $1 > /dev/null 2>&1 | true
     if [[ ${PIPESTATUS[0]} != 0 ]]; then
-        sudo apt-get install $1 > /dev/null 2>&1
+        sudo apt-get install -y $1 > /dev/null 2>&1
         if [[ $? != 0 ]]; then
             error
             return
         fi
+    fi
+    ok
+}
+
+function install_pyenv() {
+    running "Installing pyenv from Github"
+    if [ ! -d "~/.pyenv" ]; then
+        git clone https://github.com/pyenv/pyenv.git ~/.pyenv > /dev/null 2>&1
+        git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv > /dev/null 2>&1
+        source $__root/homedir/.bashrc
     fi
     ok
 }
@@ -75,6 +85,15 @@ function require_pyenv() {
     #   $1 - The python version for this environment
     #   $2 - The name of the virtual environment
     running "pyenv virtualenv $1 $2"
+    pyenv versions | grep $1 > /dev/null 2>&1
+    if [[ $? != 0 ]]; then
+        pyenv install $1 > /dev/null 2>&1
+        if [[ $? != 0 ]]; then
+            error
+            return
+        fi
+    fi
+
     pyenv versions | grep $2 > /dev/null 2>&1
     if [[ $? != 0 ]]; then
         pyenv virtualenv $1 $2 > /dev/null 2>&1

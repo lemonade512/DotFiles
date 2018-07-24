@@ -20,10 +20,14 @@ sudo -v
 # Keep-alive: update existing sudo time stamp until the script has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+# TODO (plemons): If I ever change to using Python instead of bash, it would
+# be useful to use Jinja templates for things like this.
+if [[ ! -e $__root/homedir/.gitconfig ]]; then
+    bot "It looks like your .gitconfig file needs some updating"
+    running "cp templates/.gitconfig homedir/.gitconfig"
+    cp $__root/templates/.gitconfig $__root/homedir
+    ok
 
-grep 'name = GITFULLNAME' $__root/homedir/.gitconfig > /dev/null 2>&1
-if [[ $? = 0 ]]; then
-    bot "It looks like your .gitignore file needs some updating"
     fullname=`get_full_name`
     email=`get_email`
     if [[ ! "$fullname" ]]; then
