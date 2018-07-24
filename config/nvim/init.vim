@@ -65,11 +65,14 @@ call plug#end()            " required
 "   }}}
 "   Language Client {{{
         let g:LanguageClient_serverCommands = {
-            \ 'python': ['pyls']
+            \ 'python': ['pyls'],
+            \ 'sh': ['bash-language-server', 'start']
             \ }
 "   }}}
 "   Neovim Completion Manager {{{
-        autocmd BufEnter *.py call ncm2#enable_for_buffer()
+        " TODO (plemons): Check to make sure this line is actually working,
+        " and doing something important
+        autocmd BufEnter FileType python,sh call ncm2#enable_for_buffer()
         set completeopt=noinsert,menuone,noselect
         " When the <Enter> key is pressed while the popup menu is visible, it only
         " hides the menu. Use this mapping to close the menu and also start a new

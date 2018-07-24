@@ -1,5 +1,6 @@
 *.swp
-.vim/bundle
-.vim/.netrwhist
-.vim/view
-.vim/sessions
+homedir/.vim/bundle
+homedir/.vim/.netrwhist
+homedir/.vim/view
+homedir/.vim/sessions
+config/nvim/bundle

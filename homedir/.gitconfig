@@ -1,13 +1,13 @@
-[core]
-	editor = vim
-    autocrlf = input
-
 [user]
-    name = Phillip Lemons
-    email = philliplemons512@gmail.com
+    name = GITFULLNAME
+    email = GITEMAIL
 
 [credential]
     helper = cache
+
+[core]
+	editor = vim
+    autocrlf = input
 
 [branch]
     # autosetupmerge auto-adds the --track flag to each git branch,
