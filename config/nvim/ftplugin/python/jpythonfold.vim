@@ -89,6 +89,8 @@ function! GetBlockIndent(lnum)
         if getline(p) =~ '^$\|^\s*#' | continue
         " zero-level regular line
         elseif indent(p) == 0 | return 0
+        " Ignore dedented end of function def
+        elseif getline(p) =~ '^\s*):' | continue
         " skip deeper or equal lines
         elseif indent(p) >= ind || getline(p) =~ '^$\|^\s*#' | continue
         " indent is strictly less at this point: check for def/class
