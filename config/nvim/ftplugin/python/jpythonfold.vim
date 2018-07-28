@@ -142,6 +142,12 @@ function! GetPythonFold(lnum)
     " if begin of file: take zero
     elseif p==0 | let pind = 0
     endif
+
+    " If this is an indented '):' from function def, count as one level deeper
+    if getline(a:lnum) =~ '^\s*):$'
+        let ind = ind + &shiftwidth
+    endif
+
     " Case S*=* and C*=*: indent equal
     if ind>0 && ind==pind | return '='
     " Case S*>* and C*>*: indent increase
