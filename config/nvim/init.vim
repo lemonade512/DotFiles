@@ -70,9 +70,7 @@ call plug#end()            " required
             \ }
 "   }}}
 "   Neovim Completion Manager {{{
-        " TODO (plemons): Check to make sure this line is actually working,
-        " and doing something important
-        autocmd BufEnter FileType python,sh call ncm2#enable_for_buffer()
+        autocmd BufEnter *.py,*.sh call ncm2#enable_for_buffer()
         set completeopt=noinsert,menuone,noselect
         " When the <Enter> key is pressed while the popup menu is visible, it only
         " hides the menu. Use this mapping to close the menu and also start a new
@@ -92,6 +90,9 @@ let g:tex_flavor = "latex"
 " }}}
 
 " Colors {{{
+
+" Python syntax highlighting
+let g:python_highlight_all = 1
 
 " Use gruvbox if possible, and fall back to zenburn
 silent! colorscheme zenburn
