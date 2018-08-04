@@ -7,6 +7,8 @@
 # MacOS functionality is located in macos_helpers.sh.
 ###############################################################################
 
+source $__root/lib_sh/installers.sh
+
 function get_full_name() {
     # TODO (plemons): Implement this
     :
@@ -75,7 +77,11 @@ function create_symlinks() {
 function setup_neovim() {
     running "Installing nvim plugins..."
     nvim +PlugInstall +qall > /dev/null 2>&1
-    ok
+    if [[ $? != 0 ]]; then
+        error
+    else
+        ok
+    fi
     require_pyenv 2.7.15 neovim2
     require_pyenv 3.6.6 neovim3
 
@@ -103,11 +109,11 @@ function setup_neovim() {
     pyenv deactivate
 
     running "Adding python paths to nvim config"
-    sed -r -i "s#(\s*let g:python_host_prog\s*=\s*).*#\1'$python2_path'#" $__root/config/nvim/init.vim
+    sed -r -i "s#(\s*let g:python_host_prog\s*=\s*).*#\1'$python2_path'#" $__root/config/nvim/init.vim > /dev/null 2>&1
     if [[ $? != 0 ]]; then
         running "compensating for MacOS"
-        sed -r -i '' "s#(\s*let g:python_host_prog\s*=\s*).*#\1'$python2_path'#" $__root/config/nvim/init.vim
-        sed -r -i '' "s#(\s*let g:python3_host_prog\s*=\s*).*#\1'$python3_path'#" $__root/config/nvim/init.vim
+        sed -E -i '' "s#([[:space:]]*let g:python_host_prog[[:space:]]*=[[:space:]]*).*#\1'$python2_path'#" $__root/config/nvim/init.vim
+        sed -E -i '' "s#([[:space:]]*let g:python3_host_prog[[:space:]]*=[[:space:]]*).*#\1'$python3_path'#" $__root/config/nvim/init.vim
     else
         sed -r -i "s#(\s*let g:python3_host_prog\s*=\s*).*#\1'$python3_path'#" $__root/config/nvim/init.vim
     fi

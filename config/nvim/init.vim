@@ -122,6 +122,7 @@ set foldlevelstart=10	" open most folds by default
 set foldnestmax=10		" 10 nested fold max
 set foldmethod=indent
 set foldignore=''   " Make sure to fold bash comments
+set timeoutlen=1000 ttimeoutlen=0
 
 " Disable backup and swap files
 set nobackup

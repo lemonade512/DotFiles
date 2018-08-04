@@ -168,6 +168,9 @@ if [ -f /home/phillip/libraries/google-cloud-sdk/completion.bash.inc ]; then
   source '/home/phillip/libraries/google-cloud-sdk/completion.bash.inc'
 fi
 
-
-export NVM_DIR="/home/plemons/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+if [ "$(uname)" == "Darwin" ]; then
+    [ -s "$(brew --prefix nvm)/nvm.sh" ] && source $(brew --prefix nvm)/nvm.sh
+else
+    [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+fi

@@ -10,7 +10,23 @@ NVM_URL="https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh"
 
 function source_nvm() {
     export NVM_DIR="$HOME/.nvm"
-    source $NVM_DIR/nvm.sh
+    if [ -s "$NVM_DIR/nvm.sh" ]; then
+        source $NVM_DIR/nvm.sh
+    else
+        source $(brew --prefix nvm)/nvm.sh
+    fi
+}
+
+function require_brew() {
+    running "brew install $1"
+    brew list $1 > /dev/null 2>&1 | true
+    if [[ ${PIPESTATUS[0]} != 0 ]]; then
+        brew install $1 > /dev/null 2>&1
+        if [[ $? != 0 ]]; then
+            error
+        fi
+    fi
+    ok
 }
 
 function install_nvm() {

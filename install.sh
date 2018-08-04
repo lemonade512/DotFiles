@@ -7,10 +7,10 @@ source $__root/lib_sh/echos.sh
 
 # Source helper functions based on operating system
 source $__root/lib_sh/default_helpers.sh
-if [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
-    source $__root/lib_sh/debian_helpers.sh
-elif [ "$(uname)" == "Darwin" ]; then
+if [ "$(uname)" == "Darwin" ]; then
     source $__root/lib_sh/macos_helpers.sh
+elif [ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
+    source $__root/lib_sh/debian_helpers.sh
 fi
 
 # Ask for the administrator password upfront

@@ -1,14 +1,38 @@
 #!/usr/bin/env bash
 
 source $__root/lib_sh/echos.sh
+source $__root/lib_sh/installers.sh
+
+function get_full_name() {
+    fullname=`osascript -e "long user name of (system info)"`
+    if [[ -n "$fullname" ]];then
+        lastname=$(echo $fullname | awk '{print $2}');
+        firstname=$(echo $fullname | awk '{print $1}');
+    fi
+
+    if [[ -z $lastname ]]; then
+        lastname=`dscl . -read /Users/$(whoami) | grep LastName | sed "s/LastName: //"`
+    fi
+    if [[ -z $firstname ]]; then
+        firstname=`dscl . -read /Users/$(whoami) | grep FirstName | sed "s/FirstName: //"`
+    fi
+    fullname="$firstname $lastname"
+    echo "$fullname"
+}
+
+function get_email() {
+    echo `dscl . -read /Users/$(whoami)  | grep EMailAddress | sed "s/EMailAddress: //"`
+}
 
 function install_package_managers() {
     install_homebrew
+    require_brew nvm
+    require_nvm stable
+    require_nvm node
+    install_pyenv
 }
 
 function install_homebrew() {
-    # Copied from https://github.com/atomantic/dotfiles/blob/master/install.sh
-
     running "checking homebrew install"
     brew_bin=$(which brew) 2>&1 > /dev/null
     if [[ $? != 0 ]]; then
@@ -22,7 +46,7 @@ function install_homebrew() {
         ok
         # Make sure we’re using the latest Homebrew
         running "updating homebrew"
-        brew update
+        brew update > /dev/null 2>&1
         ok
         bot "before installing brew packages, we can upgrade any outdated packages."
         ask "run brew upgrade? [y|N] " response
@@ -35,4 +59,14 @@ function install_homebrew() {
             ok "skipped brew package upgrades.";
         fi
     fi
+}
+
+function install_development_tools() {
+    require_brew docker
+    require_brew git
+    require_brew neovim
+    require_brew nmap
+    require_brew tmux
+    require_brew tree
+    require_brew wget
 }
