@@ -82,3 +82,6 @@ create_symlinks
 
 bot "Neovim"
 setup_neovim
+
+bot "Oh my zsh"
+setup_oh_my_zsh

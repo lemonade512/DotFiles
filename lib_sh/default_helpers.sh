@@ -119,3 +119,25 @@ function setup_neovim() {
     fi
     ok
 }
+
+function setup_oh_my_zsh() {
+    action "Installing oh my zsh"
+    running "Linking $__root/oh-my-zsh"
+    ln -s "$__root/oh-my-zsh" "$HOME/.oh-my-zsh" > /dev/null 2>&1
+    ok
+
+    # TODO (plemons): There are a lot of things that get installed from
+    # Github via a git clone. Perhaps we should just add a require_github
+    # function in the installers.sh file?
+    running "Installing powerlevel9k from Github"
+    if [[ ! -d "$__root/oh-my-zsh/custom/themes/powerlevel9k" ]]; then
+        git clone https://github.com/bhilburn/powerlevel9k.git $__root/oh-my-zsh/custom/themes/powerlevel9k > /dev/null 2>&1
+    fi
+    ok
+
+    running "Installing autosugestions from Github"
+    if [[ ! -d "$__root/oh-my-zsh/custom/plugins/zsh-autosuggestions" ]]; then
+        git clone https://github.com/zsh-users/zsh-autosuggestions $__root/oh-my-zsh/custom/plugins/zsh-autosuggestions > /dev/null 2>&1
+    fi
+    ok
+}

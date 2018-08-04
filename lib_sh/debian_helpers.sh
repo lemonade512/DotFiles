@@ -38,4 +38,8 @@ function install_development_tools() {
     require_pip virtualenv
     require_apt wget
     install_pyenv
+
+    action "Installing zsh"
+    require_apt zsh
+    default_shell zsh
 }

@@ -8,9 +8,9 @@ The installation script was inspired by (and mostly copied from) https://github.
 <h1>Installation Instructions</h1>
 In a terminal run the following commands in your home directory:
 ```sh
-git clone https://github.com/lemonade512/DotFiles.git
-cd DotFiles
-bin/install.sh
+git clone --recurse-submodules https://github.com/lemonade512/DotFiles.git .dotfiles
+cd .dotfiles
+./install.sh
 ```
 
 <h1>Libraries</h1>

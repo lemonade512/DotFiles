@@ -143,3 +143,11 @@ function upgrade_pip() {
     fi
     ok
 }
+
+function default_shell() {
+    # Changes the default login shell
+    #   $1 - Desired default shell
+    running "chsh -s `which $1` `whoami`"
+    sudo chsh -s `which $1` `whoami`
+    ok
+}
