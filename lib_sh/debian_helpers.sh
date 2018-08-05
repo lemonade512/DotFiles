@@ -41,5 +41,4 @@ function install_development_tools() {
 
     action "Installing zsh"
     require_apt zsh
-    default_shell zsh
 }

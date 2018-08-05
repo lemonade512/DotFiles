@@ -123,7 +123,10 @@ function setup_neovim() {
 function setup_oh_my_zsh() {
     action "Installing oh my zsh"
     running "Linking $__root/oh-my-zsh"
-    ln -s "$__root/oh-my-zsh" "$HOME/.oh-my-zsh" > /dev/null 2>&1
+    # TODO (plemons): Use the same logic as in the link_files method
+    if [ ! -h $HOME/.oh-my-zsh ]; then
+        ln -s "$__root/oh-my-zsh" "$HOME/.oh-my-zsh" > /dev/null 2>&1
+    fi
     ok
 
     # TODO (plemons): There are a lot of things that get installed from
@@ -140,4 +143,12 @@ function setup_oh_my_zsh() {
         git clone https://github.com/zsh-users/zsh-autosuggestions $__root/oh-my-zsh/custom/plugins/zsh-autosuggestions > /dev/null 2>&1
     fi
     ok
+
+    running "Installing zsh syntax highlighting from Github"
+    if [[ ! -d "$__root/oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]; then
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $__root/oh-my-zsh/custom/plugins/zsh-syntax-highlighting > /dev/null 2>&1
+    fi
+    ok
+
+    default_shell zsh
 }

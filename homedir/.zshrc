@@ -1,15 +1,50 @@
-export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="powerlevel9k/powerlevel9k"
-export LS_COLORS="di=1;34:ln=35:so=31:pi=33:ex=32:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+# vim:foldmethod=marker:foldlevel=0
 
-plugins=(zsh-autosuggestions)
-source ~/.zshtheme
+# Updating the PATH {{{
+# Make sure .bashrc is idempotent
+[[ -z "$PATH_ORIGINAL" ]] && export PATH_ORIGINAL=$PATH
+export PATH=$PATH_ORIGINAL:$HOME/bin
+export PATH=$PATH:$HOME/libraries/google_appengine/
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:/opt/mssql-tools/bin
+export PATH=$PATH:$HOME/arcanist/bin
+export PATH="$HOME/.pyenv/bin:$PATH"
+# }}}
+
+# Source oh-my-zsh {{{
+# This needs to be sourced before oh-my-zsh
+if [ -f "$HOME/.zsh/zsh_theme" ]; then
+    source $HOME/.zsh/zsh_theme
+fi
+
+export ZSH=$HOME/.oh-my-zsh
+plugins=(zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
+# }}}
+
+# Source custom config files {{{
+if [ -f "$HOME/.zsh/zsh_alias" ]; then
+    source $HOME/.zsh/zsh_alias
+fi
+
+if [ -f "$HOME/.zsh/zsh_functions" ]; then
+    source $HOME/.zsh/zsh_functions
+fi
+
+if [ -f "$HOME/.zsh/zsh_completion" ]; then
+    source $HOME/.zsh/zsh_completion
+fi
+
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
+    source $HOME/google-cloud-sdk/completion.zsh.inc
+fi
+
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
+    source $HOME/google-cloud-sdk/path.zsh.inc
+fi
+# }}}
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=245'
-
-zstyle ':completion:*' completer _complete _correct _approximate
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 bindkey -v
 bindkey '^ ' autosuggest-accept
