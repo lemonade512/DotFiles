@@ -4,6 +4,7 @@ homedir/.vim/.netrwhist
 homedir/.vim/view
 homedir/.vim/sessions
 config/nvim/bundle
+logs/
 
 # Ignore files that are templated
 homedir/.gitconfig
