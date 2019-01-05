@@ -15,6 +15,23 @@ except NameError:
     pass
 
 
+def get_email():
+    username, stderr = shell(["whoami"])
+    print("Username:", username)
+    stdout, stderr = shell([
+        "dscl",
+        ".",
+        "-read",
+        "/Users/" + str(username.strip())
+    ])
+    try:
+        stdout, stderr = shell(["grep", "EMailAddress"], stdin=stdout)
+        email, stderr = shell(["sed", "s/EMailAddress: //"], stdin=stdout)
+    except ShellError:
+        return None
+    return email
+
+
 class AuthenticationError(Exception):
     pass
 
@@ -105,7 +122,7 @@ class ShellError(Exception):
         self.stderr = stderr
 
 
-def shell(command, sudo=False):
+def shell(command, sudo=False, stdin=None):
     """ Runs a shell command.
 
     Below is a series of examples for how to use this function.
@@ -127,9 +144,12 @@ def shell(command, sudo=False):
         (str, str): A tuple of the output from stdout and stderr.
     """
     if sudo:
+        if stdin:
+            # TODO (plemons): Make this possible somehow?
+            raise Exception("Can't pass stdin to sudo commands")
         stdout, stderr, returncode = _sudo_shell(command)
     else:
-        stdout, stderr, returncode = _user_shell(command)
+        stdout, stderr, returncode = _user_shell(command, stdin=stdin)
 
     if returncode != 0:
         raise ShellError(
@@ -139,9 +159,15 @@ def shell(command, sudo=False):
     return stdout, stderr
 
 
-def _user_shell(command):
-    proc = Popen(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
-    stdout, stderr = proc.communicate()
+def _user_shell(command, stdin=None):
+    proc = Popen(
+        command,
+        stdin=PIPE,
+        stdout=PIPE,
+        stderr=PIPE,
+        universal_newlines=True
+    )
+    stdout, stderr = proc.communicate(stdin)
     return stdout, stderr, proc.returncode
 
 
@@ -165,6 +191,7 @@ def user_input(message):
 
 
 if __name__ == "__main__":
+    print(get_email())
     with Authentication():
         print(shell(["whoami"], sudo=True)[0])
     print(shell(["whoami"])[0])
