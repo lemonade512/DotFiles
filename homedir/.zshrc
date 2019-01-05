@@ -45,6 +45,7 @@ fi
 # }}}
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=245'
+export EDITOR="$(which nvim)"
 
 bindkey -v
 bindkey '^ ' autosuggest-accept

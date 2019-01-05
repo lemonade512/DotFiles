@@ -23,5 +23,6 @@ def get_platform():
         logging.error("Unkown platform {}".format(platform.platform()))
         return None
 
+
 if __name__ == "__main__":
     print("Operating system detected: {}".format(get_platform()))
