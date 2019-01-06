@@ -7,6 +7,9 @@ from getpass import getpass
 from subprocess import Popen, PIPE
 import threading
 
+from sh import dscl, ErrorReturnCode, grep, sed, whoami, osascript
+from sh.contrib import sudo
+
 
 # Need an input function that is compatible with Python 2.7 and Python 3.6
 try:
@@ -15,20 +18,52 @@ except NameError:
     pass
 
 
-def get_email():
-    username, stderr = shell(["whoami"])
-    print("Username:", username)
-    stdout, stderr = shell([
-        "dscl",
-        ".",
-        "-read",
-        "/Users/" + str(username.strip())
-    ])
+def get_full_name():
     try:
-        stdout, stderr = shell(["grep", "EMailAddress"], stdin=stdout)
-        email, stderr = shell(["sed", "s/EMailAddress: //"], stdin=stdout)
-    except ShellError:
-        return None
+        fullname = osascript(
+            "-e" "long user name of (system info)"
+        ).stdout.strip()
+    except ErrorReturnCode:
+        fullname = None
+
+    if not fullname:
+        try:
+            username = whoami().stdout.strip()
+            firstname = sed(
+                grep(
+                    dscl(".", "-read", "/Users" + username),
+                    "FirstName"
+                ),
+                "s/FirstName: //"
+            )
+            lastname = sed(
+                grep(
+                    dscl(".", "-read", "/Users" + username),
+                    "LastName"
+                ),
+                "s/LastName: //"
+            )
+            fullname = firstname + " " + lastname
+        except ErrorReturnCode:
+            fullname = None
+
+    return fullname
+
+
+def get_email():
+    email = None
+    try:
+        username = whoami().stdout.strip()
+        email = sed(
+            grep(
+                dscl(".", "-read", "/Users/" + username),
+                "EMailAddress"
+            ),
+            "s/EMailAddress: //"
+        )
+    except ErrorReturnCode:
+        pass
+
     return email
 
 
@@ -113,86 +148,13 @@ class CommandInterface(ABC):
         raise NotImplementedError
 
 
-class ShellError(Exception):
-
-    def __init__(self, message, returncode, stdout, stderr):
-        super(ShellError, self).__init__(message)
-        self.returncode = returncode
-        self.stdout = stdout
-        self.stderr = stderr
-
-
-def shell(command, sudo=False, stdin=None):
-    """ Runs a shell command.
-
-    Below is a series of examples for how to use this function.
-
-        >>> stdout, stderr = shell(["ls"])
-        >>> try:
-        ...     shell(["grep", "test", "test.txt"])
-        ... except:
-        ...     print("Could not find 'test' in 'test.txt'")
-
-    Args:
-        command (list): A list where the first element is the command to
-            excecute, and the following elements are arguments to be passed to
-            that command.
-        sudo (bool): Whether or not to elevate privileges using sudo. Defaults to
-            False.
-
-    Returns:
-        (str, str): A tuple of the output from stdout and stderr.
-    """
-    if sudo:
-        if stdin:
-            # TODO (plemons): Make this possible somehow?
-            raise Exception("Can't pass stdin to sudo commands")
-        stdout, stderr, returncode = _sudo_shell(command)
-    else:
-        stdout, stderr, returncode = _user_shell(command, stdin=stdin)
-
-    if returncode != 0:
-        raise ShellError(
-            "`{}` returned error code {}".format(" ".join(command), returncode),
-            returncode, stdout, stderr
-        )
-    return stdout, stderr
-
-
-def _user_shell(command, stdin=None):
-    proc = Popen(
-        command,
-        stdin=PIPE,
-        stdout=PIPE,
-        stderr=PIPE,
-        universal_newlines=True
-    )
-    stdout, stderr = proc.communicate(stdin)
-    return stdout, stderr, proc.returncode
-
-
-def _sudo_shell(command):
-    if not Authentication.sudo_pass:
-        raise AuthenticationError("Could not authenticate user")
-
-    proc = Popen(
-        ["sudo", "-S"] + command,
-        stdin=PIPE,
-        stdout=PIPE,
-        stderr=PIPE,
-        universal_newlines=True
-    )
-    stdout, stderr = proc.communicate(Authentication.sudo_pass + "\n")
-    return stdout, stderr, proc.returncode
-
-
 def user_input(message):
     return input(message)
 
 
 if __name__ == "__main__":
-    print(get_email())
-    with Authentication():
-        print(shell(["whoami"], sudo=True)[0])
-    print(shell(["whoami"])[0])
-    print(shell(["whoami"], sudo=True)[0])
+    print(get_full_name())
+    #print(get_email())
+    with sudo:
+        print(whoami().stdout.strip())
+    print(whoami().stdout.strip())
