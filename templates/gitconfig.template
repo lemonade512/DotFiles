@@ -1,6 +1,6 @@
 [user]
-    name = GITFULLNAME
-    email = GITEMAIL
+    name = {{ fullname }}
+    email = {{ email }}
 
 [credential]
     helper = cache

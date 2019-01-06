@@ -1,4 +1,5 @@
 *.swp
+*.pyc
 homedir/.vim/bundle
 homedir/.vim/.netrwhist
 homedir/.vim/view
@@ -7,4 +8,4 @@ config/nvim/bundle
 logs/
 
 # Ignore files that are templated
-homedir/.gitconfig
+build/
