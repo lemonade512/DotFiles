@@ -18,7 +18,15 @@ except NameError:
     pass
 
 
-def get_full_name():
+def read_user_fullname():
+    """ Reads user's full name from system config files.
+
+    This function attempts to determine the current user's full name by reading
+    system configuration files. If that is unsuccesful, None is returned.
+
+    Returns:
+        str: The user's full name, or None if not found.
+    """
     try:
         fullname = osascript(
             "-e" "long user name of (system info)"
@@ -46,6 +54,22 @@ def get_full_name():
             fullname = firstname + " " + lastname
         except ErrorReturnCode:
             fullname = None
+
+    return fullname
+
+
+def get_full_name():
+    fullname = read_user_fullname()
+    if not fullname:
+        response = "n"
+    else:
+        print("I see your name is {}.".format(fullname))
+        response = user_input("Is that correct? [Y/n]")
+
+    if response.lower().startswith("n"):
+        first = user_input("What is your first name? ")
+        last = user_input("What is your last name? ")
+        fullname = first + " " + last
 
     return fullname
 
