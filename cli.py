@@ -74,7 +74,12 @@ def get_full_name():
     return fullname
 
 
-def get_email():
+def read_user_email():
+    """ Reads user's email from system config files.
+
+    Returns:
+        str: The user's email, or None if not found.
+    """
     email = None
     try:
         username = whoami().stdout.strip()
@@ -87,6 +92,23 @@ def get_email():
         )
     except ErrorReturnCode:
         pass
+
+    return email
+
+
+def get_email():
+    email = read_user_email()
+    if not email:
+        response = "n"
+    else:
+        # TODO (plemons): Add color to this and the get_fullname() prompt
+        print("The best I can make out, your email address is {}.".format(
+            email)
+        )
+        response = user_input("Is that correct? [Y/n]")
+
+    if response.lower().startswith("n"):
+        email = user_input("What is your email? ")
 
     return email
 
