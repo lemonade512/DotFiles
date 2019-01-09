@@ -18,6 +18,10 @@ except NameError:
     pass
 
 
+COL_YELLOW = "\033[93m"
+COL_RESET = "\033[00m"
+
+
 def read_user_fullname():
     """ Reads user's full name from system config files.
 
@@ -63,7 +67,10 @@ def get_full_name():
     if not fullname:
         response = "n"
     else:
-        print("I see your name is {}.".format(fullname))
+        print(
+            "I see your name is " +
+            COL_YELLOW + str(fullname) + COL_RESET
+        )
         response = user_input("Is that correct? [Y/n]")
 
     if response.lower().startswith("n"):
@@ -102,8 +109,9 @@ def get_email():
         response = "n"
     else:
         # TODO (plemons): Add color to this and the get_fullname() prompt
-        print("The best I can make out, your email address is {}.".format(
-            email)
+        print(
+            "The best I can make out, your email address is " +
+            COL_YELLOW + str(email) + COL_RESET
         )
         response = user_input("Is that correct? [Y/n]")
 
@@ -200,7 +208,7 @@ def user_input(message):
 
 if __name__ == "__main__":
     print(get_full_name())
-    #print(get_email())
+    print(get_email())
     with sudo:
         print(whoami().stdout.strip())
     print(whoami().stdout.strip())
