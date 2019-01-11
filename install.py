@@ -13,7 +13,7 @@ import os
 from halo import Halo
 from jinja2 import Template
 
-from cli import get_full_name, user_input
+from cli import get_email, get_full_name, user_input
 from system_info import get_platform
 #from package_config import default_package_managers, package_aliases
 
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     # TODO (plemons): Install requirements.txt before imports
     setup_logging(LOG_FILE, logging.INFO)
     fullname = get_full_name()
-    email = user_input("What is your email? ")
+    email = get_email()
     file(
         "~/.gitconfig",
         "gitconfig.template",

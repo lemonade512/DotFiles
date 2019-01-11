@@ -10,16 +10,14 @@ import threading
 from sh import dscl, ErrorReturnCode, grep, sed, whoami, osascript
 from sh.contrib import sudo
 
+from colors import Fore
+
 
 # Need an input function that is compatible with Python 2.7 and Python 3.6
 try:
     input = raw_input
 except NameError:
     pass
-
-
-COL_YELLOW = "\033[93m"
-COL_RESET = "\033[00m"
 
 
 def read_user_fullname():
@@ -69,7 +67,7 @@ def get_full_name():
     else:
         print(
             "I see your name is " +
-            COL_YELLOW + str(fullname) + COL_RESET
+            Fore.YELLOW + str(fullname) + Fore.RESET
         )
         response = user_input("Is that correct? [Y/n]")
 
@@ -111,7 +109,7 @@ def get_email():
         # TODO (plemons): Add color to this and the get_fullname() prompt
         print(
             "The best I can make out, your email address is " +
-            COL_YELLOW + str(email) + COL_RESET
+            Fore.YELLOW + str(email) + Fore.RESET
         )
         response = user_input("Is that correct? [Y/n]")
 
