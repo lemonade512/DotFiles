@@ -1,19 +1,21 @@
-<h1>Overview</h1>
-In this repository I keep all of my config files for vim, mercurial, and other
-programs I use. I also have some cheat sheets and other miscellaneous files
-that I use during development.
+# Overview
+This repository stores all of my development config. If I need a new
+development machine, I can get everything set up and configured with less
+than 5 commands and in under 10 minutes.
 
-The installation script was inspired by (and mostly copied from) https://github.com/hashrocket/dotmatrix.
+Everything has been designed to be user-friendly so others can easily use my
+configuration as is or add it to their own configuration.
 
-<h1>Installation Instructions</h1>
+# Installation Instructions
 In a terminal run the following commands in your home directory:
 ```sh
 git clone --recurse-submodules https://github.com/lemonade512/DotFiles.git .dotfiles
 cd .dotfiles
-./install.sh
+sudo pip install -r requirements.txt
+python install.py
 ```
 
-<h1>Libraries</h1>
+# Libraries
 The install script does not install many of the libraries I use on a daily
 basis, such as google-appengine, android-studio, and google-cloud-sdk. The
 .bashrc assumes these libraries are located in a libraries folder in the home
