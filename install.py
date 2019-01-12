@@ -7,6 +7,7 @@ quickly on any machine that I use.
 
 from __future__ import print_function
 
+import datetime
 import logging
 import os
 
@@ -18,6 +19,7 @@ from system_info import get_platform
 #from package_config import default_package_managers, package_aliases
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
+HOME = os.path.expanduser("~")
 LOG_FILE = os.path.join(ROOT, "logs/install.log")
 
 
@@ -85,15 +87,69 @@ def file(path, template_file, **kwargs):
         spinner.fail()
 
 
+def ensure_directory(directory):
+    """ Make sure directory exists """
+    if os.path.exists(directory) and not os.path.isdir(directory):
+        raise Exception("Backup directory cannot be created")
+
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+
+def _backup(file, backup_dir):
+    # TODO (plemons): Write tests to make sure this works (create a temp user,
+    # add some files, run _backup to hit all branches)
+    ensure_directory(backup_dir)
+    os.path.rename(file, os.path.join(backup_dir, file))
+
+
+def create_symlinks(src, dst, backup_dir):
+    """ Creates symbolic links for all files in source.
+
+    This will create a symbolic link in dst for all files in src. If a file
+    already exists in dst, it will be moved to the specified backup directory.
+
+    Args:
+        src (str): The source directory with files and directories to link.
+        dst (str): Where the new symbolic links will be created.
+        backup_dir (str): Path to a directory for backup up existing files.
+    """
+    # TODO (plemons): Add Halo spinner checkmarks and Xs for success and errors
+    for file in os.listdir(src):
+        print("linking", file)
+        original = os.path.join(src, file)
+        target = os.path.join(dst, file)
+        if os.path.islink(target):
+            os.unlink(target)
+
+        if os.path.exists(target):
+            _backup(target, backup_dir)
+
+        os.symlink(original, target)
+
+
 if __name__ == "__main__":
     # TODO (plemons): Install requirements.txt before imports
-    setup_logging(LOG_FILE, logging.INFO)
-    fullname = get_full_name()
-    email = get_email()
-    file(
-        "~/.gitconfig",
-        "gitconfig.template",
-        fullname=fullname,
-        email=email
+    #setup_logging(LOG_FILE, logging.INFO)
+    #fullname = get_full_name()
+    #email = get_email()
+    #file(
+    #    "~/.gitconfig",
+    #    "gitconfig.template",
+    #    fullname=fullname,
+    #    email=email
+    #)
+    backup_time = datetime.datetime.now().strftime("%Y.%m.%d.%H.%M.%S")
+    backup_dir = os.path.join(
+        HOME, os.path.join(".dotfiles_backup", backup_time)
+    )
+    print("Installing top-level dotfiles")
+    create_symlinks(
+        os.path.join(ROOT, "homedir"), HOME, backup_dir
+    )
+    print("Installing .config dotfiles")
+    ensure_directory(os.path.join(HOME, ".config"))
+    create_symlinks(
+        os.path.join(ROOT, "config"), os.path.join(HOME, ".config"), backup_dir
     )
 
