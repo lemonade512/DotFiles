@@ -6,7 +6,7 @@
     helper = cache
 
 [core]
-	editor = vim
+	editor = nvim
     autocrlf = input
 
 [branch]
