@@ -130,15 +130,16 @@ def create_symlinks(src, dst, backup_dir):
 
 if __name__ == "__main__":
     # TODO (plemons): Install requirements.txt before imports
-    #setup_logging(LOG_FILE, logging.INFO)
-    #fullname = get_full_name()
-    #email = get_email()
-    #file(
-    #    "~/.gitconfig",
-    #    "gitconfig.template",
-    #    fullname=fullname,
-    #    email=email
-    #)
+    setup_logging(LOG_FILE, logging.INFO)
+    fullname = get_full_name()
+    email = get_email()
+    file(
+        "~/.gitconfig",
+        "gitconfig.template",
+        fullname=fullname,
+        email=email
+    )
+
     backup_time = datetime.datetime.now().strftime("%Y.%m.%d.%H.%M.%S")
     backup_dir = os.path.join(
         HOME, os.path.join(".dotfiles_backup", backup_time)
