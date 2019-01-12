@@ -139,7 +139,6 @@ if __name__ == "__main__":
         fullname=fullname,
         email=email
     )
-
     backup_time = datetime.datetime.now().strftime("%Y.%m.%d.%H.%M.%S")
     backup_dir = os.path.join(
         HOME, os.path.join(".dotfiles_backup", backup_time)
@@ -154,3 +153,10 @@ if __name__ == "__main__":
         os.path.join(ROOT, "config"), os.path.join(HOME, ".config"), backup_dir
     )
 
+    # This must go after we install .config dotfiles so the symlink to the
+    # nvim directory has been created before we render the template.
+    file(
+        "~/.config/nvim/init.vim",
+        "init.vim.template",
+        home=HOME
+    )

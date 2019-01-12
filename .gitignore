@@ -9,3 +9,4 @@ logs/
 
 # Ignore files that are templated
 build/
+config/nvim/init.vim

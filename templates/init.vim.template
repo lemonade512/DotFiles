@@ -1,4 +1,4 @@
-" Vim-plug initialization {{{
+" Vim-plug initialization {{ '{{{' }}
 " ============================================================================
 " Avoid modifying this section, unless you are very sure of what you are doing
 
@@ -19,13 +19,14 @@ endif
 
 " Obscure hacks done, you can now modify the rest of the .vimrc as you wish :)
 " ============================================================================
-" }}}
+" {{ '}}}' }}
 
-" Python extensions {{{
-let g:python_host_prog = '/home/plemons/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/home/plemons/.pyenv/versions/neovim3/bin/python'
-" }}}
+" Python extensions {{ '{{{' }}
+let g:python_host_prog = '{{ home }}/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '{{ home }}/.pyenv/versions/neovim3/bin/python'
+" {{ '}}}' }}
 
+{% raw %}
 " Package Management {{{
 call plug#begin('~/.config/nvim/bundle')
 
@@ -38,8 +39,8 @@ Plug 'tpope/vim-fugitive'  " Git for Vim
 Plug 'bling/vim-airline'   " Better status bar
 Plug 'vim-python/python-syntax'  " Syntax highlighting for Vim
 Plug 'morhetz/gruvbox'     " Colorscheme
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-jedi'      " Neovim completion manager for Python
+" Plug 'ncm2/ncm2'
+" Plug 'ncm2/ncm2-jedi'      " Neovim completion manager for Python
 Plug 'roxma/nvim-yarp'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -70,7 +71,7 @@ call plug#end()            " required
             \ }
 "   }}}
 "   Neovim Completion Manager {{{
-        autocmd BufEnter *.py,*.sh call ncm2#enable_for_buffer()
+        " autocmd BufEnter *.py,*.sh call ncm2#enable_for_buffer()
         set completeopt=noinsert,menuone,noselect
         " When the <Enter> key is pressed while the popup menu is visible, it only
         " hides the menu. Use this mapping to close the menu and also start a new
@@ -239,4 +240,5 @@ nnoremap <leader>g :GitGutterToggle<CR>
 
 " }}}
 
+{% endraw %}
 " vim:foldmethod=marker
