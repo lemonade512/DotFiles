@@ -116,7 +116,9 @@ def create_symlinks(src, dst, backup_dir):
     """
     # TODO (plemons): Add Halo spinner checkmarks and Xs for success and errors
     for file in os.listdir(src):
-        print("linking", file)
+        message = "linking %s" % file
+        spinner = Halo(text=message, spinner="dots", placement="right")
+        spinner.start()
         original = os.path.join(src, file)
         target = os.path.join(dst, file)
         if os.path.islink(target):
@@ -126,6 +128,7 @@ def create_symlinks(src, dst, backup_dir):
             _backup(target, backup_dir)
 
         os.symlink(original, target)
+        spinner.succeed()
 
 
 if __name__ == "__main__":
