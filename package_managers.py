@@ -57,6 +57,31 @@ class Apt(CommandInterface):
         return True
 
 
+class Yum(CommandInterface):
+
+    def __init__(self, package):
+        self.package = package
+
+    def execute(self):
+        try:
+            with sudo:
+                sh.yum("list", "installed", self.package)
+        except sh.ErrorReturnCode_1:
+            try:
+                with sudo:
+                    sh.yum("install", "-y", self.package)
+            except sh.ErrorReturnCode as err:
+                err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+                logging.error(
+                    "Error with `sudo install %s`: %s",
+                    self.package,
+                    err_message
+                )
+                return False
+
+        return True
+
+
 if __name__ == "__main__":
     from system_info import get_platform
     plat = get_platform()
