@@ -16,7 +16,7 @@ from jinja2 import Template
 
 from cli import get_email, get_full_name, user_input
 from system_info import get_platform
-#from package_config import default_package_managers, package_aliases
+from package_config import default_package_managers, package_aliases
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 HOME = os.path.expanduser("~")
@@ -33,6 +33,26 @@ def setup_logging(logfile, loglevel):
         filename=logfile,
         level=loglevel
     )
+
+
+def require(package):
+    DefaultPackageManager = default_package_managers[get_platform()]
+    command = DefaultPackageManager(package)
+    if package in package_aliases:
+        command = package_aliases[package].get(get_platform(), command)
+
+    if command is None:
+        return
+
+    spinner = Halo(
+        text="Installing {}".format(package), spinner="dots", placement="right"
+    )
+    spinner.start()
+    successful = command.execute()
+    if not successful:
+        spinner.fail()
+    else:
+        spinner.succeed()
 
 
 def file(path, template_file, **kwargs):
@@ -163,3 +183,9 @@ if __name__ == "__main__":
         "init.vim.template",
         home=HOME
     )
+
+    require("tmux")
+    require("git")
+    require("make")
+    require("gcc")
+    require("python-dev")
