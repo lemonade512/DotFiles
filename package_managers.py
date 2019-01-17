@@ -57,6 +57,8 @@ class Apt(CommandInterface):
         return True
 
 
+# TODO (plemons): All of these package manager classes look very similar. Is
+# there a way we could reduce the amount of replicated code?
 class Yum(CommandInterface):
 
     def __init__(self, package):
@@ -73,7 +75,34 @@ class Yum(CommandInterface):
             except sh.ErrorReturnCode as err:
                 err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
                 logging.error(
-                    "Error with `sudo install %s`: %s",
+                    "Error with `sudo yum install %s`: %s",
+                    self.package,
+                    err_message
+                )
+                return False
+
+        return True
+
+
+# TODO (plemons): This currently installs using sudo. If we wanted to install
+# into a virtual environment, we would need to run as the user instead of root.
+class Pip(CommandInterface):
+
+    def __init__(self, package):
+        self.package = package
+
+    def execute(self):
+        try:
+            with sudo:
+                sh.pip("show", self.package)
+        except sh.ErrorReturnCode_1:
+            try:
+                with sudo:
+                    sh.pip("install", self.package)
+            except sh.ErrorReturnCode as err:
+                err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+                logging.error(
+                    "Error with `sudo pip install %s`: %s",
                     self.package,
                     err_message
                 )
