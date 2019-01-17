@@ -125,16 +125,20 @@ class AuthenticationError(Exception):
 
 class Authentication:
 
-    sudo_pass = None    # currently authenticated
+    sudo = None         # currently authenticated
     _sudo_pass = None   # saved sudo pass
 
     def __enter__(self):
         if Authentication._sudo_pass is None:
             Authentication.authenticate()
-        Authentication.sudo_pass = Authentication._sudo_pass
+        Authentication.sudo = sudo(
+            password=Authentication._sudo_pass, _with=True
+        )
+        Authentication.sudo.__enter__()
 
     def __exit__(self, *args):
-        Authentication.sudo_pass = None
+        Authentication.sudo.__exit__(*args)
+        Authentication.sudo = None
 
     @staticmethod
     def authenticate():

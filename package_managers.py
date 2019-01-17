@@ -5,9 +5,8 @@ from __future__ import print_function
 import logging
 
 import sh
-from sh.contrib import sudo
 
-from cli import CommandInterface
+from cli import Authentication, CommandInterface
 
 
 class Brew(CommandInterface):
@@ -43,7 +42,7 @@ class Apt(CommandInterface):
             sh.dpkg("-l", self.package)
         except sh.ErrorReturnCode_1:
             try:
-                with sudo:
+                with Authentication():
                     sh.apt_get("install", "-y", self.package)
             except sh.ErrorReturnCode as err:
                 err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
@@ -65,23 +64,22 @@ class Yum(CommandInterface):
         self.package = package
 
     def execute(self):
-        try:
-            with sudo:
-                sh.yum("list", "installed", self.package)
-        except sh.ErrorReturnCode_1:
+        with Authentication():
             try:
-                with sudo:
+                sh.yum("list", "installed", self.package)
+            except sh.ErrorReturnCode_1:
+                try:
                     sh.yum("install", "-y", self.package)
-            except sh.ErrorReturnCode as err:
-                err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
-                logging.error(
-                    "Error with `sudo yum install %s`: %s",
-                    self.package,
-                    err_message
-                )
-                return False
+                except sh.ErrorReturnCode as err:
+                    err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+                    logging.error(
+                        "Error with `sudo yum install %s`: %s",
+                        self.package,
+                        err_message
+                    )
+                    return False
 
-        return True
+            return True
 
 
 # TODO (plemons): This currently installs using sudo. If we wanted to install
@@ -92,23 +90,22 @@ class Pip(CommandInterface):
         self.package = package
 
     def execute(self):
-        try:
-            with sudo:
-                sh.pip("show", self.package)
-        except sh.ErrorReturnCode_1:
+        with Authentication():
             try:
-                with sudo:
+                sh.pip("show", self.package)
+            except sh.ErrorReturnCode_1:
+                try:
                     sh.pip("install", self.package)
-            except sh.ErrorReturnCode as err:
-                err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
-                logging.error(
-                    "Error with `sudo pip install %s`: %s",
-                    self.package,
-                    err_message
-                )
-                return False
+                except sh.ErrorReturnCode as err:
+                    err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+                    logging.error(
+                        "Error with `sudo pip install %s`: %s",
+                        self.package,
+                        err_message
+                    )
+                    return False
 
-        return True
+            return True
 
 
 if __name__ == "__main__":
