@@ -10,6 +10,7 @@ from cli import Authentication, CommandInterface
 
 
 class Brew(CommandInterface):
+    """ Installs packages using MacOS Homebrew. """
 
     def __init__(self, package):
         self.package = package
@@ -33,6 +34,7 @@ class Brew(CommandInterface):
 
 
 class Apt(CommandInterface):
+    """ Installs packages on Debian-based computers. """
 
     def __init__(self, package):
         self.package = package
@@ -59,6 +61,7 @@ class Apt(CommandInterface):
 # TODO (plemons): All of these package manager classes look very similar. Is
 # there a way we could reduce the amount of replicated code?
 class Yum(CommandInterface):
+    """ Installs packages on CentOS machines. """
 
     def __init__(self, package):
         self.package = package
@@ -85,6 +88,11 @@ class Yum(CommandInterface):
 # TODO (plemons): This currently installs using sudo. If we wanted to install
 # into a virtual environment, we would need to run as the user instead of root.
 class Pip(CommandInterface):
+    """ Installs python packages using pip.
+
+    This will install python packages using pip as the root user. This class
+    will need to be updated if you want to install into a virtual environment.
+    """
 
     def __init__(self, package):
         self.package = package
