@@ -17,10 +17,14 @@ from jinja2 import Template
 from cli import get_email, get_full_name, user_input
 from system_info import get_platform
 from package_config import default_package_managers, package_aliases
+from setup_tools import install_homebrew
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 HOME = os.path.expanduser("~")
 LOG_FILE = os.path.join(ROOT, "logs/install.log")
+
+# TODO (plemons): Add better print messages like in the original script that
+# I created based on the robot.
 
 
 def setup_logging(logfile, loglevel):
@@ -189,3 +193,7 @@ if __name__ == "__main__":
     require("make")
     require("gcc")
     require("python-dev")
+
+    plat = get_platform()
+    if plat == "darwin":
+        install_homebrew()
