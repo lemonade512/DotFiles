@@ -188,12 +188,12 @@ if __name__ == "__main__":
         home=HOME
     )
 
+    plat = get_platform()
+    if plat == "darwin":
+        install_homebrew()
+
     require("tmux")
     require("git")
     require("make")
     require("gcc")
     require("python-dev")
-
-    plat = get_platform()
-    if plat == "darwin":
-        install_homebrew()

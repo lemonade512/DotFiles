@@ -25,7 +25,7 @@ def install_homebrew():
             "Before using homebrew to install packages, we can upgrade "
             "any outdated packages."
         )
-        response = user_input("Run brew upgrade? [y|N]")
+        response = user_input("Run brew upgrade? [y|N] ")
         if response[0].lower() == "y":
             spinner = Halo(
                 text="Upgrade brew packages", spinner="dots", placement="right"
