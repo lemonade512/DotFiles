@@ -41,6 +41,18 @@ def setup_logging(logfile, loglevel):
 
 
 def require(package):
+    """ Specifies a package that should be installed.
+
+    By default, this method will use the default package manager of the OS
+    (brew for Mac, apt-get for Ubuntu, etc.), but you can override the default
+    package by specifying it in the `package_aliases.py` file.
+
+    Args:
+        package (str): User-friendly name of package. Most often, this will be
+            the same as the actual name of the package in the package manager,
+            but some packages will have different names on different systems.
+            Use your best judgement to determine what name to use.
+    """
     DefaultPackageManager = default_package_managers[get_platform()]
     command = DefaultPackageManager(package)
     if package in package_aliases:
@@ -113,7 +125,14 @@ def file(path, template_file, **kwargs):
 
 
 def ensure_directory(directory):
-    """ Make sure directory exists """
+    """ Make sure directory exists.
+
+    Args:
+        directory (str): Path to a directory you want to make sure exists. If
+            the directory already exists, this method will do nothing.
+            Otherwise, it will create the specified directory and all of its
+            parent directories as needed.
+    """
     if os.path.exists(directory) and not os.path.isdir(directory):
         raise Exception("Backup directory cannot be created")
 
