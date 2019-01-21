@@ -13,6 +13,13 @@ BREW_GITHUB = (
 
 
 def install_homebrew():
+    """ Installs or upgrades homebrew on mac.
+
+    If homebrew is not installed, this command will install it, otherwise
+    it will update homebrew to the latest version. Additionally, it will
+    offer to upgrade all homebrew packages. Upgrading all packages can take
+    a long time, so the user is given the choice to skip the upgrade.
+    """
     print("Checking homebrew install")
     if sh.which("brew"):
         spinner = Halo(

@@ -18,6 +18,7 @@ from cli import get_email, get_full_name, user_input
 from system_info import get_platform
 from package_config import default_package_managers, package_aliases
 from setup_tools import install_homebrew
+from user_interface import bot
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 HOME = os.path.expanduser("~")
@@ -170,11 +171,11 @@ if __name__ == "__main__":
     backup_dir = os.path.join(
         HOME, os.path.join(".dotfiles_backup", backup_time)
     )
-    print("Installing top-level dotfiles")
+    bot("Installing top-level dotfiles")
     create_symlinks(
         os.path.join(ROOT, "homedir"), HOME, backup_dir
     )
-    print("Installing .config dotfiles")
+    bot("Installing .config dotfiles")
     ensure_directory(os.path.join(HOME, ".config"))
     create_symlinks(
         os.path.join(ROOT, "config"), os.path.join(HOME, ".config"), backup_dir
@@ -190,8 +191,10 @@ if __name__ == "__main__":
 
     plat = get_platform()
     if plat == "darwin":
+        bot("Installing package managers")
         install_homebrew()
 
+    bot("Installing tools")
     require("tmux")
     require("git")
     require("make")
