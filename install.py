@@ -10,6 +10,24 @@ from __future__ import print_function
 import datetime
 import logging
 import os
+import subprocess
+
+
+ROOT = os.path.abspath(os.path.dirname(__file__))
+HOME = os.path.expanduser("~")
+LOG_FILE = os.path.join(ROOT, "logs/install.log")
+
+# TODO (plemons): Implement method to check requirements before installing
+# so we don't needlessly install
+def install_requirements():
+    ret = subprocess.call(["sudo", "pip", "install", "-r", os.path.join(ROOT, "requirements.txt")])
+    if ret != 0:
+        logging.error(
+            "Error with `sudo pip install -r requirements.txt`"
+        )
+print("Installing basic python requirements...")
+install_requirements()
+
 
 from halo import Halo
 from jinja2 import Template
@@ -19,10 +37,6 @@ from system_info import get_platform
 from package_config import default_package_managers, package_aliases
 from setup_tools import install_homebrew
 from user_interface import bot
-
-ROOT = os.path.abspath(os.path.dirname(__file__))
-HOME = os.path.expanduser("~")
-LOG_FILE = os.path.join(ROOT, "logs/install.log")
 
 # TODO (plemons): Add better print messages like in the original script that
 # I created based on the robot.
@@ -176,7 +190,6 @@ def create_symlinks(src, dst, backup_dir):
 
 
 if __name__ == "__main__":
-    # TODO (plemons): Install requirements.txt before imports
     setup_logging(LOG_FILE, logging.INFO)
     fullname = get_full_name()
     email = get_email()
