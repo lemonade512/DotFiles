@@ -44,6 +44,10 @@ if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
 fi
 # }}}
 
+# Initialize pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=245'
 export EDITOR="$(which nvim)"
 
