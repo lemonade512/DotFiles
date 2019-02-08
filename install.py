@@ -32,8 +32,7 @@ install_requirements()
 from halo import Halo
 from jinja2 import Template
 
-from cli import get_email, get_full_name, user_input
-from system_info import get_platform
+from cli import CLI, get_platform
 from package_config import default_package_managers, package_aliases
 from setup_tools import install_homebrew
 from user_interface import bot
@@ -191,8 +190,8 @@ def create_symlinks(src, dst, backup_dir):
 
 if __name__ == "__main__":
     setup_logging(LOG_FILE, logging.INFO)
-    fullname = get_full_name()
-    email = get_email()
+    fullname = CLI.get_full_name()
+    email = CLI.get_email()
     file(
         "~/.gitconfig",
         "gitconfig.template",

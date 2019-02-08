@@ -1,16 +1,8 @@
-""" Tools for making Python easier to use with shell commands. """
-
-from __future__ import print_function
-
 import abc
+from sh.contrib import sudo
 from getpass import getpass
 from subprocess import Popen, PIPE
 import threading
-
-from sh import dscl, ErrorReturnCode, grep, sed, whoami, osascript
-from sh.contrib import sudo
-
-from colors import Fore
 
 
 # Need an input function that is compatible with Python 2.7 and Python 3.6
@@ -18,105 +10,6 @@ try:
     input = raw_input
 except NameError:
     pass
-
-
-def read_user_fullname():
-    """ Reads user's full name from system config files.
-
-    This function attempts to determine the current user's full name by reading
-    system configuration files. If that is unsuccesful, None is returned.
-
-    Returns:
-        str: The user's full name, or None if not found.
-    """
-    try:
-        fullname = osascript(
-            "-e" "long user name of (system info)"
-        ).stdout.strip()
-    except ErrorReturnCode:
-        fullname = None
-
-    if not fullname:
-        try:
-            username = whoami().stdout.strip()
-            firstname = sed(
-                grep(
-                    dscl(".", "-read", "/Users" + username),
-                    "FirstName"
-                ),
-                "s/FirstName: //"
-            )
-            lastname = sed(
-                grep(
-                    dscl(".", "-read", "/Users" + username),
-                    "LastName"
-                ),
-                "s/LastName: //"
-            )
-            fullname = firstname + " " + lastname
-        except ErrorReturnCode:
-            fullname = None
-
-    return fullname
-
-
-def get_full_name():
-    fullname = read_user_fullname()
-    if not fullname:
-        response = "n"
-    else:
-        print(
-            "I see your name is " +
-            Fore.YELLOW + str(fullname) + Fore.RESET
-        )
-        response = user_input("Is that correct? [Y/n]")
-
-    if response.lower().startswith("n"):
-        first = user_input("What is your first name? ")
-        last = user_input("What is your last name? ")
-        fullname = first + " " + last
-
-    return fullname
-
-
-def read_user_email():
-    """ Reads user's email from system config files.
-
-    Returns:
-        str: The user's email, or None if not found.
-    """
-    email = None
-    try:
-        username = whoami().stdout.strip()
-        email = sed(
-            grep(
-                dscl(".", "-read", "/Users/" + username),
-                "EMailAddress"
-            ),
-            "s/EMailAddress: //"
-        )
-    except ErrorReturnCode:
-        pass
-
-    return email
-
-
-def get_email():
-    email = read_user_email()
-    if not email:
-        response = "n"
-    else:
-        # TODO (plemons): Add color to this and the get_fullname() prompt
-        print(
-            "The best I can make out, your email address is " +
-            Fore.YELLOW + str(email) + Fore.RESET
-        )
-        response = user_input("Is that correct? [Y/n]")
-
-    if response.lower().startswith("n"):
-        email = user_input("What is your email? ")
-
-    return email
 
 
 class AuthenticationError(Exception):
@@ -168,11 +61,11 @@ class Authentication:
         finally:
             timer.cancel()
 
-
 # This creates a parent class for abstract classes that is compatible with
 # Python 2 and 3. See the following stackoverflow answer for more info:
 # https://stackoverflow.com/questions/35673474/using-abc-abcmeta-in-a-way-it-is-compatible-both-with-python-2-7-and-python-3-5
 ABC = abc.ABCMeta("ABC", (object, ), {"__slots__": ()})
+
 
 class CommandInterface(ABC):
     """ Interface for creating executable commands.
@@ -207,10 +100,3 @@ class CommandInterface(ABC):
 def user_input(message):
     return input(message)
 
-
-if __name__ == "__main__":
-    print(get_full_name())
-    print(get_email())
-    with sudo:
-        print(whoami().stdout.strip())
-    print(whoami().stdout.strip())
