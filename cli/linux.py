@@ -1,3 +1,4 @@
+from cli import user_input
 
 def read_user_fullname():
     """ Reads user's full name from system config files.
@@ -36,20 +37,7 @@ def read_user_email():
     Returns:
         str: The user's email, or None if not found.
     """
-    email = None
-    try:
-        username = whoami().stdout.strip()
-        email = sed(
-            grep(
-                dscl(".", "-read", "/Users/" + username),
-                "EMailAddress"
-            ),
-            "s/EMailAddress: //"
-        )
-    except ErrorReturnCode:
-        pass
-
-    return email
+    return None
 
 
 def get_email():

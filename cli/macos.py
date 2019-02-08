@@ -3,9 +3,10 @@
 from __future__ import print_function
 
 from sh import dscl, ErrorReturnCode, grep, sed, whoami, osascript
-
-from colors import Fore
 from sh.contrib import sudo
+
+from cli import user_input
+from colors import Fore
 
 
 def read_user_fullname():

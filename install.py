@@ -32,10 +32,18 @@ install_requirements()
 from halo import Halo
 from jinja2 import Template
 
-from cli import CLI, get_platform
+from cli import Authentication, CLI, get_platform
 from package_config import default_package_managers, package_aliases
 from setup_tools import install_homebrew
 from user_interface import bot
+
+
+# TODO (plemons): We have to authenticate here so that Authentication can
+# use the sudo password while installing packages. If we don't authenticate
+# here, the message telling the user to enter their sudo password may get
+# overwritten by the Halo spinner.
+with Authentication():
+    pass
 
 # TODO (plemons): Add better print messages like in the original script that
 # I created based on the robot.

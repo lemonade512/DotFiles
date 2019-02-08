@@ -22,5 +22,8 @@ package_aliases = {
     'python-dev': {
         'centos': Yum("python-devel"),
         "darwin": None
+    },
+    'nvm': {
+        'debian': None
     }
 }
