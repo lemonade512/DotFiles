@@ -48,6 +48,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'mindriot101/vim-yapf' " Better auto-formatting for Python
 Plug 'airblade/vim-gitgutter'  " Git gutter for vim
+Plug 'posva/vim-vue'
 
 " ===================
 " End custom plugins
