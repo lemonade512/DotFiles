@@ -84,7 +84,7 @@ call plug#end()            " required
         inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "   }}}
 "   Control-P {{{
-        let g:ctrlp_custom_ignore = 'node_modules'
+        let g:ctrlp_custom_ignore = 'node_modules\|lib'
 "   }}}
 " }}}
 
