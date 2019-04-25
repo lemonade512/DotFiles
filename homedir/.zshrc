@@ -9,6 +9,9 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:/opt/mssql-tools/bin
 export PATH=$PATH:$HOME/arcanist/bin
 export PATH="$HOME/.pyenv/bin:$PATH"
+
+# Make sure pdflatex is available on Mac (requires `brew cask install mactex`)
+export PATH=$PATH:/Library/TeX/texbin
 # }}}
 
 # Source oh-my-zsh {{{
