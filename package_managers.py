@@ -3,10 +3,35 @@
 from __future__ import print_function
 
 import logging
+import os
 
 import sh
 
 from cli import Authentication, CommandInterface
+
+
+class GitHub(CommandInterface):
+    """ Clones packages from GitHub repositories. """
+
+    def __init__(self, repo, dest):
+        self.repo = repo
+        self.dest = dest
+
+    def execute(self):
+        if os.path.exists(self.dest):
+            return True
+
+        try:
+            sh.git("clone", self.repo, self.dest)
+        except sh.ErrorReturnCode as err:
+            err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+            logging.error(
+                "Error with `git clone %s`: %s",
+                self.repo,
+                err_message
+            )
+            return False
+        return True
 
 
 class Brew(CommandInterface):
