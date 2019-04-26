@@ -13,6 +13,7 @@ import os
 import subprocess
 import site
 import sys
+import sh
 
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -104,6 +105,54 @@ def require(package):
         spinner.fail()
     else:
         spinner.succeed()
+
+
+# TODO (phillip): This dictionary and function need to be updated based on
+# the platform.
+keyboard = {
+    'capslock': 0x700000039,
+    'left-ctrl': 0x7000000E0
+}
+
+# Technical note describing remapping keys on mac
+# https://developer.apple.com/library/archive/technotes/tn2450/_index.html
+def remap_key(src, dest):
+    """ Remaps src key to dest key.
+
+    An example of remapping the caps lock key to act like the left control key
+    would be to call `remap_key('capslock', 'left-ctrl')
+
+    Args:
+        src (str): Key name in keyboard dict. This is the key that will change
+            functionality.
+        dest (str): Key name in keyboard dict. The key defined in `src` should
+            act like this key.
+    """
+    spinner = Halo(
+        text="Remapping {} to {}".format(src, dest),
+        spinner="dots",
+        placement="right"
+    )
+    spinner.start()
+    remap_dict = {
+        'UserKeyMapping': [
+            {
+                'HIDKeyboardModifierMappingSrc': keyboard[src],
+                'HIDKeyboardModifierMappingDst': keyboard[dest]
+            }
+        ]
+    }
+    try:
+        sh.hidutil("property", "--set", str(remap_dict).replace("'", '"'))
+        spinner.succeed()
+    except sh.ErrorReturnCode as err:
+        err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+        logging.error(
+            "Error with `hidutil property --set %s : %s",
+            str(remap_dict),
+            err_message
+        )
+        spinner.fail()
 
 
 def file(path, template_file, **kwargs):
@@ -258,3 +307,6 @@ if __name__ == "__main__":
     require("tree")
     require("wget")
     require("nvm")
+
+    bot("Configuring mac")
+    remap_key('capslock', 'left-ctrl')
