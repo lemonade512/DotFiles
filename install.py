@@ -91,7 +91,8 @@ def require(package):
     DefaultPackageManager = default_package_managers[get_platform()]
     command = DefaultPackageManager(package)
     if package in package_aliases:
-        command = package_aliases[package].get(get_platform(), command)
+        default = package_aliases[package].get('default', command)
+        command = package_aliases[package].get(get_platform(), default)
 
     if command is None:
         return
