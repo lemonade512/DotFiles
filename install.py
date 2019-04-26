@@ -231,6 +231,27 @@ def _backup(file, backup_dir):
     os.path.rename(file, os.path.join(backup_dir, file))
 
 
+def link(src, dest, backup_dir):
+    """ Creates a symbolic link at the specified location.
+
+    Args:
+        src (str): Path to the file that we want to link to.
+        dest (str): Path of the link that will be created.
+        backupd_dir (str): Path to directory to backup existing files.
+    """
+    message = "linking %s" % os.path.basename(src)
+    spinner = Halo(text=message, spinner="dots", placement="right")
+    spinner.start()
+    if os.path.islink(dest):
+        os.unlink(dest)
+
+    if os.path.exists(dest):
+        _backup(dest, backup_dir)
+
+    os.symlink(src, dest)
+    spinner.succeed()
+
+
 def create_symlinks(src, dst, backup_dir):
     """ Creates symbolic links for all files in source.
 
@@ -243,20 +264,10 @@ def create_symlinks(src, dst, backup_dir):
         backup_dir (str): Path to a directory for backup up existing files.
     """
     # TODO (plemons): Add Halo spinner checkmarks and Xs for success and errors
-    for file in os.listdir(src):
-        message = "linking %s" % file
-        spinner = Halo(text=message, spinner="dots", placement="right")
-        spinner.start()
-        original = os.path.join(src, file)
-        target = os.path.join(dst, file)
-        if os.path.islink(target):
-            os.unlink(target)
-
-        if os.path.exists(target):
-            _backup(target, backup_dir)
-
-        os.symlink(original, target)
-        spinner.succeed()
+    for file_ in os.listdir(src):
+        original = os.path.join(src, file_)
+        target = os.path.join(dst, file_)
+        link(original, target, backup_dir)
 
 
 if __name__ == "__main__":
@@ -311,3 +322,9 @@ if __name__ == "__main__":
 
     bot("Configuring mac")
     remap_key('capslock', 'left-ctrl')
+
+    bot("Installing Oh My Zsh")
+    link(os.path.join(ROOT, "oh-my-zsh"), os.path.join(HOME, ".oh-my-zsh"), backup_dir)
+    require("zsh-powerlevel9k")
+    require("zsh-autosuggestions")
+    require("zsh-syntax-highlighting")
