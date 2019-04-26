@@ -11,16 +11,29 @@ import datetime
 import logging
 import os
 import subprocess
+import site
+import sys
 
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 HOME = os.path.expanduser("~")
 LOG_FILE = os.path.join(ROOT, "logs/install.log")
 
+# Install latest version of setuptools
+ret = subprocess.call(["pip", "install", "--user", "-U", "setuptools"])
+if ret != 0:
+    logging.error(
+        "Error installing latest version of `setuptools`"
+    )
+    exit(1)
+
+# Append `pip --user` install path
+sys.path.append(site.USER_BASE)
+
 # TODO (plemons): Implement method to check requirements before installing
 # so we don't needlessly install
 def install_requirements():
-    ret = subprocess.call(["sudo", "pip", "install", "-r", os.path.join(ROOT, "requirements.txt")])
+    ret = subprocess.call(["pip", "install", "--user", "-r", os.path.join(ROOT, "requirements.txt")])
     if ret != 0:
         logging.error(
             "Error with `sudo pip install -r requirements.txt`"
