@@ -3,6 +3,9 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Basic directory configuration
+CONFIG_DIR="$HOME/.config"
+
 # Make sure .bashrc is idempotent
 [[ -z "$PATH_ORIGINAL" ]] && export PATH_ORIGINAL=$PATH
 export PATH=$PATH_ORIGINAL:$HOME/bin
@@ -13,8 +16,10 @@ export PATH=$PATH:$HOME/arcanist/bin
 export PATH="$HOME/.pyenv/bin:$PATH"
 
 # Initialize pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [ $(command -v pyenv) ]; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 # ANSI color codes {{{
 RS=$'\[\033[00m\]'    # reset
@@ -158,6 +163,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 # }}}
 
+# Google Tools {{{
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f /home/phillip/libraries/google-cloud-sdk/path.bash.inc ]; then
   source '/home/phillip/libraries/google-cloud-sdk/path.bash.inc'
@@ -167,10 +173,28 @@ fi
 if [ -f /home/phillip/libraries/google-cloud-sdk/completion.bash.inc ]; then
   source '/home/phillip/libraries/google-cloud-sdk/completion.bash.inc'
 fi
+# }}}
+
+# NVM {{{
+if [ ! -d $CONFIG_DIR/dotfiles ]; then
+    mkdir -p $CONFIG_DIR/dotfiles
+fi
+
+# Cache the directory for nvm. Before, we were just calling `brew --prefix nvm`
+# every time we needed this information, but that would take a few seconds.
+if [ -e $CONFIG_DIR/dotfiles/nvmbin ]; then
+    NVM_BIN=$(cat $CONFIG_DIR/dotfiles/nvmbin)
+fi
+
+if [ ! -e "$NVM_BIN" ] || [ -z "$NVM_BIN" ]; then
+    NVM_BIN=$(brew --prefix nvm)
+    echo "$NVM_BIN" > $CONFIG_DIR/dotfiles/nvmbin
+fi
 
 export NVM_DIR="$HOME/.nvm"
 if [ "$(uname)" == "Darwin" ]; then
-    [ -s "$(brew --prefix nvm)/nvm.sh" ] && source $(brew --prefix nvm)/nvm.sh
+    [ -s "$NVM_BIN/nvm.sh" ] && source $NVM_BIN/nvm.sh
 else
     [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 fi
+# }}}
