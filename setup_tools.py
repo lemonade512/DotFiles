@@ -3,6 +3,7 @@
 from halo import Halo
 
 import sh
+import logging
 
 from cli import user_input
 
@@ -43,12 +44,21 @@ def install_homebrew():
         else:
             print("Skipped brew package upgrades")
     else:
-        print("Installing homebrew")
+        # TODO (phillip): Currently, this homebrew installation does not work on a fresh
+        # computer. It works from the command line, but not when run from the script. I
+        # need to figure out what is going on. It could be because user input is needed.
+        spinner = Halo(
+            text="Installing homebrew", spinner="dots", placement="right"
+        )
+        spinner.start()
         try:
             script = sh.curl("-fsSL", BREW_GITHUB).stdout
             sh.ruby("-e", script)
+            spinner.succeed()
         except sh.ErrorReturnCode:
-            print("Unable to install homebrew. Aborting...")
+            logging.error("Unable to install homebrew. Aborting...")
+            spinner.fail()
+            exit(1)
 
 
 if __name__ == "__main__":
