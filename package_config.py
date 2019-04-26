@@ -12,7 +12,7 @@ with -dev.
 
 import os
 
-from package_managers import Brew, Apt, Yum, GitHub
+from package_managers import Brew, BrewCask, Apt, Yum, GitHub
 
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -29,6 +29,14 @@ package_aliases = {
     },
     'nvm': {
         'debian': None
+    },
+    'iterm2': {
+        'debian': None,
+        'darwin': BrewCask("iterm2")
+    },
+    'google-chrome': {
+        'debian': None,
+        'darwin': BrewCask("google-chrome")
     },
     'zsh-powerlevel9k': {
         'default': GitHub(

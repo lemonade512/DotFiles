@@ -328,3 +328,6 @@ if __name__ == "__main__":
     require("zsh-powerlevel9k")
     require("zsh-autosuggestions")
     require("zsh-syntax-highlighting")
+
+    bot("Installing brew casks")
+    require("iterm2")

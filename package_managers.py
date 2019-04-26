@@ -58,6 +58,30 @@ class Brew(CommandInterface):
         return True
 
 
+class BrewCask(CommandInterface):
+    """ Installs casks (UI apps) from MacOS homebrew """
+
+    def __init__(self, package):
+        self.package = package
+
+    def execute(self):
+        try:
+            sh.brew("cask", "list", self.package)
+        except sh.ErrorReturnCode_1:
+            try:
+                sh.brew("cask", "install", self.package)
+            except sh.ErrorReturnCode as err:
+                err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+                logging.error(
+                    "Error with `brew cask install %s`: %s",
+                    self.package,
+                    err_message
+                )
+                return False
+
+        return True
+
+
 class Apt(CommandInterface):
     """ Installs packages on Debian-based computers. """
 
