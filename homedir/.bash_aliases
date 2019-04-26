@@ -5,11 +5,6 @@ alias grep="grep --color=auto"
 alias fgrep="grep -F"
 alias egrep="grep -E"
 
-# Use macvim on mac
-if [ "$(uname -s)" = "Darwin" ]; then
-    alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
-fi
-
 # Use nvim if it is available
 if hash nvim 2>/dev/null; then
     alias vim="nvim"
