@@ -48,8 +48,10 @@ fi
 # }}}
 
 # Initialize pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [ $(command -v pyenv) ]; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=245'
 export EDITOR="$(which nvim)"
