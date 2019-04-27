@@ -129,6 +129,10 @@ def remap_key(src, dest):
         dest (str): Key name in keyboard dict. The key defined in `src` should
             act like this key.
     """
+    # TODO (phillip): Right now, these changes do not survive a reboot. I am
+    # going to just change this manually in the keyboard settings, but I might
+    # be able to figure out how to do it with `defaults`.
+    # https://apple.stackexchange.com/questions/141069/updating-modifier-keys-from-the-command-line-takes-no-effect
     spinner = Halo(
         text="Remapping {} to {}".format(src, dest),
         spinner="dots",
@@ -152,6 +156,75 @@ def remap_key(src, dest):
             "Error with `hidutil property --set %s : %s",
             str(remap_dict),
             err_message
+        )
+        spinner.fail()
+
+
+def configure(namespace, key, *values):
+    """ Sets configuration on mac using `defaults` """
+    spinner = Halo(
+        text="Setting {}".format(key),
+        spinner="dots",
+        placement="right"
+    )
+    spinner.start()
+    try:
+        if namespace:
+            sh.defaults("write", namespace, key, *values)
+        else:
+            sh.defaults("write", key, *values)
+        spinner.succeed()
+    except sh.ErrorReturnCode as err:
+        err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+        logging.error(
+            "Error with `defaults write -g %s %s: %s", key, values, err_message
+        )
+        spinner.fail()
+
+
+# TODO (phillip): Move this to a separate config file
+font_library = {
+    "Droid Sans Mono Nerd Font Complete.otf": "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf"
+}
+
+
+def font(name):
+    spinner = Halo(
+        text="Font {}".format(name),
+        spinner="dots",
+        placement="right"
+    )
+    spinner.start()
+    try:
+        library = os.path.join(HOME, "Library/Fonts")
+        path = os.path.join(library, name)
+        sh.curl("-fLo", path, font_library[name])
+        spinner.succeed()
+    except sh.ErrorReturnCode as err:
+        err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+        logging.error(
+            "Error installing font `%s`: %s", name, err_message
+        )
+        spinner.fail()
+
+
+def default_shell(name):
+    spinner = Halo(
+        text="Default shell `{}`".format(name),
+        spinner="dots",
+        placement="right"
+    )
+    spinner.start()
+    try:
+        path = sh.which(name).strip()
+        user = sh.whoami().strip()
+        with Authentication():
+            sh.chsh("-s", path, user)
+        spinner.succeed()
+    except sh.ErrorReturnCode as err:
+        err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+        logging.error(
+            "Error changing default shell to %s: %s", name, err_message
         )
         spinner.fail()
 
@@ -320,15 +393,24 @@ if __name__ == "__main__":
     require("wget")
     require("nvm")
 
-    bot("Configuring mac")
-    remap_key('capslock', 'left-ctrl')
+    if plat == "darwin":
+        bot("Configuring mac")
+        #remap_key('capslock', 'left-ctrl')
+        configure("-g", "com.apple.mouse.scaling", 4.0)
+        configure("-g", "KeyRepeat", "-int", 1)
+        configure(None, "com.apple.driver.AppleBluetoothMultitouch.mouse", "MouseButtonMode", "TwoButton")
 
     bot("Installing Oh My Zsh")
     link(os.path.join(ROOT, "oh-my-zsh"), os.path.join(HOME, ".oh-my-zsh"), backup_dir)
     require("zsh-powerlevel9k")
     require("zsh-autosuggestions")
     require("zsh-syntax-highlighting")
+    font("Droid Sans Mono Nerd Font Complete.otf")
+    default_shell("zsh")
 
     bot("Installing brew casks")
     require("iterm2")
     require("anki")
+
+    # TODO (plemons): Make this yellow so it is more visible.
+    bot("You will need to logout and log in again to make some configuration work")
