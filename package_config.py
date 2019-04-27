@@ -20,6 +20,10 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 default_package_managers = {'darwin': Brew, 'debian': Apt}
 
 package_aliases = {
+    'anki': {
+        'darwin': BrewCask("anki"),
+        'debian': None
+    },
     'httpd': {
         'debian': Apt("apache")
     },

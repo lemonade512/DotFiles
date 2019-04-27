@@ -331,3 +331,4 @@ if __name__ == "__main__":
 
     bot("Installing brew casks")
     require("iterm2")
+    require("anki")
