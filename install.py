@@ -64,9 +64,8 @@ with Authentication():
 
 
 def setup_logging(logfile, loglevel):
-    print(
-        "Setting up logging. If you have problems see the", logfile, "file."
-    )
+    """ Creates a directory for all logs during installation. """
+    bot("Setting up logging. If you have problems see the {} file".format(logfile))
     if not os.path.exists(os.path.dirname(logfile)):
         os.makedirs(os.path.dirname(logfile))
     logging.basicConfig(
@@ -160,6 +159,7 @@ def remap_key(src, dest):
         spinner.fail()
 
 
+# TODO (phillip): Need to add support for Ubuntu to set up important configuration.
 def configure(namespace, key, *values):
     """ Sets configuration on mac using `defaults` """
     spinner = Halo(
@@ -189,6 +189,11 @@ font_library = {
 
 
 def font(name):
+    """ Installs fonts using curl.
+
+    Args:
+        name (str): The name of the font as defined in `font_library` dictionary.
+    """
     spinner = Halo(
         text="Font {}".format(name),
         spinner="dots",
@@ -209,6 +214,7 @@ def font(name):
 
 
 def default_shell(name):
+    """ Sets default shell for the current user. """
     spinner = Halo(
         text="Default shell `{}`".format(name),
         spinner="dots",
