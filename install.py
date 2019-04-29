@@ -304,6 +304,15 @@ def ensure_directory(directory):
 
 
 def _backup(file, backup_dir):
+    """ Copies a file to a backup directory.
+
+    This function will make sure that the proper backup directory is created
+    before copying the file to the backup directory.
+
+    Args:
+        file (str): Path to the file being backed up.
+        backup_dir (str): Path to the backup directory
+    """
     # TODO (plemons): Write tests to make sure this works (create a temp user,
     # add some files, run _backup to hit all branches)
     ensure_directory(backup_dir)
