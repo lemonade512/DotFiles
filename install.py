@@ -414,6 +414,7 @@ if __name__ == "__main__":
         configure("-g", "com.apple.mouse.scaling", 4.0)
         configure("-g", "KeyRepeat", "-int", 1)
         configure(None, "com.apple.driver.AppleBluetoothMultitouch.mouse", "MouseButtonMode", "TwoButton")
+        sh.defaults("-currentHost", "write", "com.apple.screensaver", "idleTime", "-int", "1800")
 
     bot("Installing Oh My Zsh")
     link(os.path.join(ROOT, "oh-my-zsh"), os.path.join(HOME, ".oh-my-zsh"), backup_dir)
