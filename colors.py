@@ -1,6 +1,7 @@
 """ Defines terminal escape codes for colors. """
 
 class Fore:
+    """ Foreground colors """
     RED = "\033[31m"
     GREEN = "\033[32m"
     YELLOW = "\033[33m"
@@ -8,6 +9,7 @@ class Fore:
 
 
 class Back:
+    """ Background colors """
     RED = "\033[41m"
     GREEN = "\033[42m"
     YELLOW = "\033[43m"
@@ -15,6 +17,7 @@ class Back:
 
 
 class Style:
+    """ Miscellaneous style changes """
     RESET = "\033[00m"
 
 
