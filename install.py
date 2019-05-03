@@ -407,6 +407,7 @@ if __name__ == "__main__":
     require("tree")
     require("wget")
     require("nvm")
+    require("node")
 
     if plat == "darwin":
         bot("Configuring mac")
