@@ -52,13 +52,6 @@ from setup_tools import install_homebrew
 from user_interface import bot
 
 
-# TODO (plemons): We have to authenticate here so that Authentication can
-# use the sudo password while installing packages. If we don't authenticate
-# here, the message telling the user to enter their sudo password may get
-# overwritten by the Halo spinner.
-with Authentication():
-    pass
-
 # TODO (plemons): Add better print messages like in the original script that
 # I created based on the robot.
 
@@ -235,11 +228,14 @@ def default_shell(name):
         spinner.fail()
 
 
-def file(path, template_file, **kwargs):
-    """ Installs a file using symlinks.
+def file(path, template_file, load_vars=lambda: {}):
+    """ Installs a template file using symlinks.
 
     If a file already exists at the specified path and it is not a symbolic
-    link, then this function will print an error and return.
+    link, then this function will print an error and return. If the file is
+    a symlink to the `build` directory of your dotfiles repo, then this will
+    check to see if the template has been modified since the file was last
+    built.
 
     Args:
         path (str): Filesystem path where we should install the filled out
@@ -247,7 +243,9 @@ def file(path, template_file, **kwargs):
         template_file (str): The filename of the template to install. The
             file should be located in the $ROOT/templates directory of this
             repository.
-        **kwargs: This is the list of input parameters for the tamplate.
+        load_vars (func): A function that will be run when the file is built to
+            fill in template information. This is passed in as a function so
+            that user input is only asked for when the file is built.
     """
     spinner = Halo(text=path, spinner="dots", placement="right")
     spinner.start()
@@ -261,19 +259,29 @@ def file(path, template_file, **kwargs):
         template_path = os.path.join(
             ROOT, os.path.join("templates", template_file)
         )
+        template_mtime = os.path.getmtime(template_path)
         with open(template_path, "r") as template_file:
             template = Template(template_file.read())
 
-        # Write filled out file to build directory of repository
         build_path = os.path.join(
             ROOT, os.path.join("build", os.path.basename(path))
         )
-        if not os.path.exists(os.path.dirname(build_path)):
-            os.makedirs(os.path.dirname(build_path))
-        with open(build_path, 'w') as outfile:
-            outfile.write(template.render(**kwargs))
+        if not os.path.exists(build_path):
+            build_mtime = 0
+        else:
+            build_mtime = os.path.getmtime(build_path)
 
-        # Make sure to expand the home directory when necessary
+        # Build the template if the template has been modified since last build
+        if template_mtime > build_mtime:
+            # TODO (plemons): I should only do this if I actually need user
+            # input. Theoretically, the load_vars function could just read
+            # from a config file making this unnecessary
+            spinner.info("Asking for user input for {}".format(path))
+            if not os.path.exists(os.path.dirname(build_path)):
+                os.makedirs(os.path.dirname(build_path))
+            with open(build_path, 'w') as outfile:
+                outfile.write(template.render(**load_vars()))
+
         path = os.path.expanduser(path)
         dirpath = os.path.dirname(path)
         if not os.path.exists(dirpath):
@@ -359,14 +367,21 @@ def create_symlinks(src, dst, backup_dir):
 
 
 if __name__ == "__main__":
+    # We have to authenticate here so that Authentication can use the sudo
+    # password while installing packages. If we don't authenticate here, the
+    # message telling the user to enter their sudo password may get overwritten
+    # by the Halo spinner.
+    with Authentication():
+        pass
+
     setup_logging(LOG_FILE, logging.INFO)
-    fullname = CLI.get_full_name()
-    email = CLI.get_email()
     file(
         "~/.gitconfig",
         "gitconfig.template",
-        fullname=fullname,
-        email=email
+        load_vars=lambda: {
+            'fullname': CLI.get_full_name(),
+            'email': CLI.get_email()
+        }
     )
     backup_time = datetime.datetime.now().strftime("%Y.%m.%d.%H.%M.%S")
     backup_dir = os.path.join(
@@ -387,7 +402,9 @@ if __name__ == "__main__":
     file(
         "~/.config/nvim/init.vim",
         "init.vim.template",
-        home=HOME
+        load_vars=lambda: {
+            'home': HOME
+        }
     )
 
     plat = get_platform()
