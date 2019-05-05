@@ -16,6 +16,7 @@ import subprocess
 import site
 import sys
 import sh
+import tarfile
 
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -204,6 +205,52 @@ def font(name):
         err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
         logging.error(
             "Error installing font `%s`: %s", name, err_message
+        )
+        spinner.fail()
+
+
+def curl(src, dest):
+    """ Installs `src` to path `dest` """
+    spinner = Halo(
+        text="curl {}".format(dest),
+        spinner="dots",
+        placement="right"
+    )
+    spinner.start()
+    if os.path.exists(dest):
+        spinner.info("{} already exists".format(dest))
+        return
+
+    try:
+        sh.curl("-fLo", dest, src)
+        spinner.succeed()
+    except sh.ErrorReturnCode as err:
+        err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+        logging.error(
+            "Error downloading file `%s`: %s", src, err_message
+        )
+        spinner.fail()
+
+
+def extract(src, dest):
+    """ Extracts the source file in dest """
+    spinner = Halo(
+        text="extract {}".format(src),
+        spinner="dots",
+        placement="right"
+    )
+    spinner.start()
+    try:
+        # TODO (phillip): This should choose the correct decompression based
+        # on the filename where possible.
+        with tarfile.open(src, "r:gz") as tar:
+            tar.extractall(dest)
+        sh.rm(src)
+        spinner.succeed()
+    except sh.ErrorReturnCode as err:
+        err_message = "\n\t" + err.stderr.replace("\n", "\n\t")
+        logging.error(
+            "Error extracting file `%s`: %s", src, err_message
         )
         spinner.fail()
 
@@ -447,6 +494,11 @@ if __name__ == "__main__":
     bot("Installing brew casks")
     require("iterm2")
     require("anki")
+
+    bot("Installing Google Cloud SDK")
+    sdk_url = "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-244.0.0-darwin-x86_64.tar.gz"
+    curl(sdk_url, os.path.join(HOME, "gcloud.tar.gz"))
+    extract(os.path.join(HOME, "gcloud.tar.gz"), HOME)
 
     # TODO (plemons): Make this yellow so it is more visible.
     bot("You will need to logout and log in again to make some configuration work")
