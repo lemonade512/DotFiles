@@ -2,8 +2,10 @@
 """ Initializes development environment.
 
 This script is meant to be used to get my development environment set up
-quickly on any machine that I use.
+quickly on any machine that I use. This script is designed to be run with
+any version of Python, so it must support both Python 2.7 and Python 3.x.
 """
+# TODO (phillip): Add testing for multiple versions of Python
 
 from __future__ import print_function
 
