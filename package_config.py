@@ -12,7 +12,7 @@ with -dev.
 
 import os
 
-from package_managers import Brew, BrewCask, Apt, Yum, GitHub
+from package_managers import Brew, BrewCask, Apt, Yum, GitHub, Pip
 
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -41,6 +41,9 @@ package_aliases = {
     'google-chrome': {
         'debian': None,
         'darwin': BrewCask("google-chrome")
+    },
+    'pipenv': {
+        'default': Pip("pipenv")
     },
     'zsh-powerlevel9k': {
         'default': GitHub(

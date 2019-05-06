@@ -4,7 +4,6 @@
 # Make sure .bashrc is idempotent
 [[ -z "$PATH_ORIGINAL" ]] && export PATH_ORIGINAL=$PATH
 export PATH=$PATH_ORIGINAL:$HOME/bin
-export PATH=$PATH:$HOME/libraries/google_appengine/
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:/opt/mssql-tools/bin
 export PATH=$PATH:$HOME/arcanist/bin

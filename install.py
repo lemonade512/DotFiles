@@ -474,6 +474,7 @@ if __name__ == "__main__":
     require("wget")
     require("nvm")
     require("node")
+    require("pipenv")
 
     if plat == "darwin":
         bot("Configuring mac")
