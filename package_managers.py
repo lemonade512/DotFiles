@@ -1,4 +1,8 @@
-""" Package management commands for Mac, Ubuntu, and CentOS. """
+""" Package management commands for Mac, Ubuntu, and CentOS.
+
+This module is meant to provide support for multiple platforms so it is easy
+to define how tools are defined on different operating systems.
+"""
 
 from __future__ import print_function
 
