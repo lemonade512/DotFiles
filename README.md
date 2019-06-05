@@ -15,6 +15,10 @@ sudo pip install -r requirements.txt
 python install.py
 ```
 
+Note that some dotfiles are built from templates. The built files will be
+stored in the `build` directory. If you want to rebuild these files, you
+will need to re-run the install script.
+
 # Libraries
 The install script does not install many of the libraries I use on a daily
 basis, such as google-appengine, android-studio, and google-cloud-sdk. The
