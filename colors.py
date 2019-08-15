@@ -1,4 +1,7 @@
-""" Defines terminal escape codes for colors. """
+""" Defines terminal escape codes for colors.
+
+Run `python colors.py` to see all the colors you can print.
+"""
 
 class Fore:
     """ Foreground colors """
