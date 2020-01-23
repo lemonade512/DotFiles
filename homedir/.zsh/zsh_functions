@@ -34,6 +34,7 @@ function extract () {
 
 # Navigation {{{
 function up() {
+    local dir
     dir=""
     if [ -z "$1" ]; then
         dir=..
@@ -56,5 +57,44 @@ function upstr() {
         return 1
     fi
     echo "$dir"
+}
+# }}}
+
+# Start/Stop VPN {{{
+
+# TODO (phillip): Check your notes to see how you like to document bash
+# functions.
+#
+# Uses `vpnc` command to setup your VPN. For now, this will just use a
+# hardcoded config file. In the future, I may want to expand this to allow
+# automatically editing files with something like `vpn create <name>`. Then
+# you could start and stop with `vpn start <name>` and `vpn stop <name>`.
+#
+#   $1 - Command to perform. Currently accepts "start", "stop", "end", or null.
+#       If no command is given, this will default to starting the hardcoded
+#       VPN.
+function vpn() {
+    local cmd
+    if [[ $# -gt 0 ]]; then
+        case "$1" in
+            "start") cmd="start" ;;
+            "end") cmd="stop" ;;
+            "stop") cmd="stop" ;;
+            *) echo "Did not understand command '$1'"; return 1 ;;
+        esac
+    else
+        cmd="start"
+    fi
+
+    if [ "$cmd" == "start" ]; then
+        local config_file="$HOME/.config/vpnc/indeedvpn.conf"
+        echo "You should get a notification on Duo to complete login"
+        sudo vpnc $config_file
+    elif [ "$cmd" == "stop" ]; then
+        echo "Stopping VPN..."
+        sudo vpnc-disconnect
+    else
+        echo "Did not understand command $cmd"
+    fi
 }
 # }}}
