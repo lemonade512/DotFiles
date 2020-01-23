@@ -1,7 +1,7 @@
 alias grep="grep --color=auto"
 
 # Use nvim if it is available
-if which nvim 2>/dev/null; then
+if type nvim >/dev/null 2>&1; then
     alias vim="nvim"
 fi
 
