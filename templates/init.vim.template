@@ -53,6 +53,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'lemonade512/vim-java'
+Plug 'udalov/kotlin-vim'
 
 " ===================
 " End custom plugins
