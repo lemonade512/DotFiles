@@ -89,7 +89,7 @@ call plug#end()            " required
         inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "   }}}
 "   Control-P {{{
-        let g:ctrlp_custom_ignore = 'node_modules\|lib'
+        let g:ctrlp_custom_ignore = 'node_modules\|lib\|allure-results\|test-results\|caches-jvm\|build/jacoco\|build/reports'
 "   }}}
 " }}}
 
