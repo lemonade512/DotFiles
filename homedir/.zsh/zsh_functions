@@ -98,3 +98,13 @@ function vpn() {
     fi
 }
 # }}}
+
+# Acrisure helper functions {{{
+function secret() {
+    local common=$(gcloud secrets versions access latest --secret $1 --project prj-c-secrets-9d49 2>/dev/null)
+    local dev=$(gcloud secrets versions access latest --secret $1 --project prj-d-secrets-ea80 2>/dev/null)
+
+    [[ -n "$common" ]] && echo "Common: $common" || echo "Common: Not Found"
+    [[ -n "$dev" ]] && echo "Dev: $dev" || echo "Dev: Not Found"
+}
+# }}}
