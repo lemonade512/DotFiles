@@ -1,0 +1,21 @@
+#!/bin/sh
+
+CUSTOM_PLUGINS_DIR="{{ .chezmoi.homeDir }}/.oh-my-zsh/custom/plugins"
+
+if [ ! -d "{{ .chezmoi.homeDir }}/.oh-my-zsh" ]; then
+  git clone https://github.com/ohmyzsh/ohmyzsh.git "{{ .chezmoi.homeDir }}/.oh-my-zsh"
+fi
+
+mkdir -p "$CUSTOM_PLUGINS_DIR"
+
+if [ ! -d "$CUSTOM_PLUGINS_DIR/zsh-syntax-highlighting" ]; then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$CUSTOM_PLUGINS_DIR/zsh-syntax-highlighting"
+fi
+
+if [ ! -d "$CUSTOM_PLUGINS_DIR/zsh-autosuggestions" ]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$CUSTOM_PLUGINS_DIR/zsh-autosuggestions"
+fi
+
+if [ "$(basename "$SHELL")" != "zsh" ]; then
+  chsh -s $(which zsh)
+fi

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if ! command -v starship >/dev/null 2>&1; then
+  curl -sS https://starship.rs/install.sh | sh
+fi
+
+starship preset catppuccin-powerline -o "{{ .chezmoi.homeDir }}/.config/starship.toml"
+sed -i '' '/^\[line_break\]$/,/^\[/ s/^disabled = true$/disabled = false/' "{{ .chezmoi.homeDir }}/.config/starship.toml"

@@ -1,0 +1,16 @@
+packages:
+  darwin:
+    brews:
+    - 'tmux'
+    - 'git'
+    - 'make'
+    - 'gcc'
+    - 'neovim'
+    - 'nmap'
+    - 'tree'
+    - 'wget'
+    - 'nvm'
+    casks:
+    - 'iterm2'
+    - 'font-droid-sans-mono-nerd-font'
+    #- 'google-chrome'

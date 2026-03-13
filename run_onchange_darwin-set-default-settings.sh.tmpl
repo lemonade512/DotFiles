@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+
+defaults write -g com.apple.mouse.scaling 4.0
+defaults write -g KeyRepeat -int 1
+defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode TwoButton
+{{ end -}}
