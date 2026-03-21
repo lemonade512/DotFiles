@@ -44,6 +44,10 @@ fi
 if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
     source $HOME/google-cloud-sdk/path.zsh.inc
 fi
+
+if [ -f "$HOME/acrisure/zsh_env" ]; then
+    source $HOME/acrisure/zsh_env
+fi
 # }}}
 
 # Setup starship prompt
@@ -60,3 +64,6 @@ export EDITOR="$(which nvim)"
 
 bindkey -v
 bindkey '^ ' autosuggest-accept
+export SPRING_PROFILES_ACTIVE=local
+
+export NODE_EXTRA_CA_CERTS="$HOME/certs/zscaler-root-ca.pem"

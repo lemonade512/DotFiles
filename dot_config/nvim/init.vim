@@ -37,10 +37,6 @@ Plug 'morhetz/gruvbox'     " Colorscheme
 " Plug 'ncm2/ncm2'
 " Plug 'ncm2/ncm2-jedi'      " Neovim completion manager for Python
 Plug 'roxma/nvim-yarp'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
 Plug 'mindriot101/vim-yapf' " Better auto-formatting for Python
 Plug 'airblade/vim-gitgutter'  " Git gutter for vim
 Plug 'posva/vim-vue'
@@ -64,12 +60,6 @@ call plug#end()            " required
 "   }}}
 "   Gruvbox {{{
         let g:gruvbox_contrast_dark = 'soft'
-"   }}}
-"   Language Client {{{
-        let g:LanguageClient_serverCommands = {
-            \ 'python': ['pyls'],
-            \ 'sh': ['bash-language-server', 'start']
-            \ }
 "   }}}
 "   Neovim Completion Manager {{{
         " autocmd BufEnter *.py,*.sh call ncm2#enable_for_buffer()
@@ -206,9 +196,6 @@ nnoremap <space> za
 vnoremap < <gv
 vnoremap > >gv
 
-" Use language client hover instead of default vim lookup
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-
 " }}}
 
 " Leader Key Mappings {{{
@@ -229,14 +216,6 @@ nnoremap <leader>q :quit<CR>
 
 " Close the preview window
 nnoremap <leader>c :pclose<CR>
-
-" Language Client Mappings
-nnoremap <leader>r :call LanguageClient#textDocument_rename()<CR>
-nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
-
-" TODO (plemons): Make sure this is only mapped for Python files. Otherwise,
-" map the LanguageClient binding
-nnoremap <leader>f :Yapf<CR>
 
 " Toggle git gutter
 nnoremap <leader>g :GitGutterToggle<CR>

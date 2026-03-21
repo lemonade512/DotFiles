@@ -5,5 +5,4 @@ if type nvim >/dev/null 2>&1; then
     alias vim="nvim"
 fi
 
-alias zookeeper='docker run --net=kafka --rm --name=zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 confluentinc/cp-zookeeper:5.4.1'
-alias kafka='docker run --net=kafka --rm -p 9092:9092 --name=kafka -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 confluentinc/cp-kafka:5.4.1'
+alias kafka='docker compose -f $HOME/acrisure/docker-compose-kafka.yaml up -d; echo "\n\nKafka is now running. See admin console at http://localhost:28028/"'
