@@ -67,3 +67,4 @@ bindkey '^ ' autosuggest-accept
 export SPRING_PROFILES_ACTIVE=local
 
 export NODE_EXTRA_CA_CERTS="$HOME/certs/zscaler-root-ca.pem"
+export CLAUDE_CODE_NO_FLICKER=1
