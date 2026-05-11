@@ -11,6 +11,11 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 
 # Make sure pdflatex is available on Mac (requires `brew cask install mactex`)
 export PATH=$PATH:/Library/TeX/texbin
+
+# Volta — Node version manager. Must come last so its shims (node/npm/npx)
+# sit at the front of PATH and win over any other Node install.
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 # }}}
 
 # Source oh-my-zsh {{{
