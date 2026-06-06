@@ -5,4 +5,5 @@ if type nvim >/dev/null 2>&1; then
     alias vim="nvim"
 fi
 
-alias kafka='docker compose -f $HOME/acrisure/docker-compose-kafka.yaml up -d; echo "\n\nKafka is now running. See admin console at http://localhost:28028/"'
+# chezmoi wrapper for the private/work dotfiles source (no-op if it isn't cloned)
+alias czw='chezmoi --source ~/.local/share/chezmoi-work --config ~/.config/chezmoi/chezmoi-work.toml'

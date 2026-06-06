@@ -1,0 +1,30 @@
+# User-Level Claude Rules
+
+## Git Push
+
+Pushing to a branch that has not yet been merged is fine — no confirmation needed. This includes pushing new commits to an open PR's branch, or pushing a new feature branch upstream for the first time.
+
+Still ask for confirmation before:
+- Pushing to `main`/`master` or any other protected/default branch
+- Force-pushing (`--force`, `--force-with-lease`) to a branch that has already been merged
+- Any push that would rewrite history on a shared/merged branch
+
+## Volta (Node version manager)
+
+I use [Volta](https://volta.sh) to manage Node versions. It is installed via Homebrew; the shims live at `~/.volta/bin` and `~/.zshrc` puts that directory at the front of `PATH`.
+
+**How it works:** Volta installs shims for `node`, `npm`, `npx`, `yarn`. When any of those run, the shim looks at the nearest `package.json` for a `"volta": { "node": "X.Y.Z" }` field and transparently execs that exact Node version. No `nvm use`, no per-command `PATH` munging.
+
+**Project pins:** the authoritative Node version for a project lives in its `package.json` under `"volta"`.
+
+**If npm/node behaves wrong, run these diagnostics in order:**
+
+1. `which node && which npm` — should resolve to something under `~/.volta/bin/`. If it points at `/opt/homebrew/...`, `/usr/local/...`, or `~/.nvm/...`, Volta's shims aren't winning on `PATH`. Check `echo $PATH` — `~/.volta/bin` must appear before any other Node source.
+2. `node --version` from inside the project directory — should match the `"volta"` pin in that project's `package.json`. If it doesn't, Volta probably hasn't downloaded that version yet: run `volta install node@<version>` (the version from `package.json`) to cache it.
+3. `volta list` — shows installed Node versions and any pins Volta resolved for the current directory.
+4. `cat package.json | jq .volta` (or grep) — confirm the project actually has a pin. If it doesn't, that's the bug; add one with `volta pin node@<version>`.
+
+**Do not** suggest `PATH=...` prefixes, `nvm use`, or other workarounds as the fix. The fix is always: get Volta's shims on `PATH` and make sure the project has a `volta` pin.
+{{ if .work }}
+@work-rules.md
+{{- end }}
